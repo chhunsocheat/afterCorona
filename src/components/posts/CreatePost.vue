@@ -11,12 +11,18 @@
 
 <script>
 import db from "../../firebase/init"
+import {mappGetters, mapGetters} from "vuex"
 export default {
 data(){
-    return {
+    return { 
         comment:null,
         feedback:null
     }
+},
+computed:{
+...mapGetters([
+    'userId'
+])
 },
 methods:{
     submitPost(){
@@ -26,7 +32,7 @@ methods:{
             comment:this.comment
         })
         .then(()=>{
-            this.$router.push({name:'main1',params:{userId:this.$route.params.userId}})
+            this.$router.push({name:'main',params:{userId:this.userId}})
         })
     }else{
         this.feedback="Please Enter a post before submitting"

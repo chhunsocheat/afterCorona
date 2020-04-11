@@ -54,7 +54,7 @@ export default {
     onLoadProfile() {
       const profile = db
         .collection("Users")
-        .doc(this.$route.params.userId)
+        .doc(this.userId)
         .get()
         .then(user => {
           const resUser = user.data();
