@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
         userId:null
     },
     getters: {
-        allCmt: state => {
+        allPosts: state => {
             return state.posts;
         },
         userId:(state)=>{
@@ -21,33 +21,32 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
-        loadCmt: (state, allCmt) => {            
-           state.posts=allCmt
+        loadPosts: (state, allPosts) => {            
+           state.posts=allPosts
         },
         submitForm:(state,{userId,...payload})=>{
             state.userId=userId;
         }
     },
     actions: {
-        loadCmt: (context) => {
-            const allCmt=[]
-            db.collection("Comment").get()
+        loadPosts: (context) => {
+            const allPosts=[]
+            db.collection("Posts").get()
             .then(allDoc=>{
                 allDoc.forEach(doc=>{
                     console.log(doc.data());
                     
-                    const cmt=doc.data();
-                    const cmtObj={
+                    const postObj={
                         id:doc.id,
-                        comment:doc.data().comment
+                        post:doc.data().post
                     }
-                    allCmt.push(cmtObj)
+                    allPosts.push(postObj)
                 })
                    // console.log("all cmt",allCmt);
                     
                
             })
-                context.commit('loadCmt', allCmt);
+                context.commit('loadPosts', allPosts);
         },
         submitForm(context,payload){
             const auth=firebase.auth();
