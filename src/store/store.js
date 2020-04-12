@@ -38,7 +38,9 @@ export const store = new Vuex.Store({
                     
                     const postObj={
                         id:doc.id,
-                        post:doc.data().post
+                        post:doc.data().post,
+                        comments:doc.data().comments,
+                        like:doc.data().like
                     }
                     allPosts.push(postObj)
                 })

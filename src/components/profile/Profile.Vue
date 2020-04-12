@@ -4,7 +4,7 @@
     <p>Name: {{name}}</p>
     <p>Email: {{email}}</p>
     <p>Password: {{password}}</p>
-    <button @click="loadProfile">Load</button>
+    <!-- <button @click="loadProfile">Load</button> -->
   </div>
 </template>
 

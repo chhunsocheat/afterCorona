@@ -1,9 +1,14 @@
 <template>
   <div>
-    <ul>
+    <ul class="container">
       <li class="each-cmt" v-for="(post,i) in allPosts" :key="i">
-        {{post.id}}
-        <p>{{post.post}}</p>
+        <!-- {{post.id}} -->
+        <h2>{{post.post}}</h2>
+        <p>Likes {{post.like}}</p>
+        <ul>
+          <p>List of Comments: </p>
+        <li v-for="(cmt,i) in post.comments" :key="i">{{cmt[i]}}</li>
+        </ul>
         <router-link :to="{name:'posts',params:{postId:post.id}}">
           <button>View</button>
         </router-link>
@@ -32,11 +37,26 @@ export default {
 };
 </script>
 
-<style>
-ul li{
+<style scoped>
+li{
+  list-style: none;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-    margin: 15px;
-    list-style-type: none;
+.each-cmt{
+  margin: 10px 0px;
+  width: 80%;
+  border: solid 1px black;
+  box-shadow: 5px 5px 10px #797979;
+}
+.each-cmt:hover{
+  transform: scale(1.05);
+  transition: 0.5s ease all;
 }
 .btn-containers{
     display: flex;
@@ -63,9 +83,5 @@ button:hover{
     transform: scale(1.1);
     transition: 0.5s ease all;
 }
-.each-cmt{
-  background: rgb(172, 127, 127);
-  border-radius: 10px;
- box-shadow: 2px 2px 4px #888888;
-}
+
 </style>
