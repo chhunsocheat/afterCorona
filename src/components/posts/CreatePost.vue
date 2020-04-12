@@ -4,10 +4,8 @@
     <form action>
       <textarea name id v-model="post"></textarea>
       <p v-if="feedback">{{feedback}}</p>
-      <router-link :to="{name:'main',params:{userId:userId}}">
-
-
-      <input type="submit" @click="submitPost" value="Submit">
+      <router-link :to="{name:'main'}">
+         <button type="submit" @click="submitPost" value="Submit">Submit</button>
       </router-link>
     </form>
   </div>

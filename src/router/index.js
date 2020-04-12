@@ -22,16 +22,8 @@ const router = new Router({
       component: SignUp
     },
     {
-      path: '/main/:userId',
-      name: 'main',
-      component: Main,
-      meta:{
-        requireAuth:true
-      }
-    },
-    {
       path: '/main/',
-      name: 'main1',
+      name: 'main',
       component: Main,
       meta:{
         requireAuth:true

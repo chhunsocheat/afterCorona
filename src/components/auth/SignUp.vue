@@ -52,7 +52,7 @@ methods:{
             
             ).then((doc)=>{
                 this.id=doc.id;
-                this.$router.push({name:'main',params:{userId:this.id}})
+                this.$router.push({name:'main'})
             }).catch(err=>{
                 console.log(err);
                 console.log("added user error");

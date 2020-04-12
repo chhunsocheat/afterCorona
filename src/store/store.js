@@ -24,7 +24,7 @@ export const store = new Vuex.Store({
         loadPosts: (state, allPosts) => {            
            state.posts=allPosts
         },
-        submitForm:(state,{userId,...payload})=>{
+        submitForm:(state,userId)=>{
             state.userId=userId;
         }
     },
@@ -59,11 +59,11 @@ export const store = new Vuex.Store({
               .then((res)=>{
                 res.forEach(user=>{
                   const profile =user.data();
-                  userId=user.id
+                  userId=user.data().id
                 })
                 router.push({name:'main',params:{userId:userId}})
                 
-                context.commit('submitForm', {userId,...payload});
+                context.commit('submitForm', userId);
               })
         
             })

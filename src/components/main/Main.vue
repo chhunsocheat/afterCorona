@@ -1,10 +1,7 @@
 <template>
   <div>
     <h1>This is the main page</h1>
-    {{userId}}
-    <p>Name: {{name}}</p>
-    <p>Email: {{email}}</p>
-    <p>Password: {{password}}</p>
+    <Profile/>
     <router-link :to="{name:'createPosts',params:{userId:userId}}">
             <button >Create Post</button>
         </router-link>
@@ -17,19 +14,20 @@
 </template>
 
 <script>
+//components
 import AllPosts from '../posts/AllPosts'
+import Profile from '../profile/Profile'
+//database and store
 import db from "@/firebase/init";
 import firebase from "firebase";
 import {mapGetters,mapActions} from 'vuex'
 export default {
   components:{
-    AllPosts
+    AllPosts,
+    Profile
   },
   data() {
     return {
-      email: null,
-      name: null,
-      password: null,
       id: this.$route.params.userId
     };
   },
@@ -43,18 +41,6 @@ export default {
       ...mapActions([
         'loadPosts'
     ]),
-    onLoadProfile() {
-      const profile = db
-        .collection("Users")
-        .doc(this.userId)
-        .get()
-        .then(user => {
-          const resUser = user.data();
-          (this.name = resUser.email),
-            (this.email = resUser.email),
-            (this.password = resUser.password);
-        });
-    },
     signOut(){
         firebase.auth().signOut()
         .then(()=>{
@@ -64,9 +50,7 @@ export default {
     
   },
   created() {
-    this.onLoadProfile()
 
-    
   },
   updated(){
   // this.onLoadProfile()
