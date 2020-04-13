@@ -1,14 +1,16 @@
 <template>
   <div>
-    <h1>This is the main page</h1>
-    <Profile/>
-    <router-link :to="{name:'createPosts',params:{userId:userId}}">
+    <h1>List of Wishes</h1>
+             
+   <AllPosts/>
+   <router-link :to="{name:'profile'}">
+     <button >Profile</button>
+   </router-link>
+    <router-link :to="{name:'createPosts'}">
             <button >Create Post</button>
         </router-link>
-   <AllPosts/>
     <div class="btn-container">
-    <button @click="signOut">Sign Out</button>
-    <button @click="loadPosts">Load All Comment</button>
+    
     </div>
   </div>
 </template>
@@ -16,7 +18,7 @@
 <script>
 //components
 import AllPosts from '../posts/AllPosts'
-import Profile from '../profile/Profile'
+import Profile from '../profile1/Profile'
 //database and store
 import db from "@/firebase/init";
 import firebase from "firebase";
@@ -39,14 +41,9 @@ export default {
   },
   methods: {
       ...mapActions([
-        'loadPosts'
+        'loadPosts',
     ]),
-    signOut(){
-        firebase.auth().signOut()
-        .then(()=>{
-            this.$router.push({name:'signin'})
-        })
-    },
+    
     
   },
   created() {
@@ -74,28 +71,31 @@ justify-content: center;
 align-self: center;
 background: none;
 }
-.btn-container button,.each-cmt button{
-    background: white;
-    padding: 20px;
-    margin-bottom: 15px;
-    border: 1px solid black;
-    color: black;
+.btn-container button,.each-cmt button, button{
+   background-color: #56baed;
+  border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
-button{
-    background: white;
-    padding: 20px;
-    margin-bottom: 5px;
-    border: 1px solid black;
-    color: black;
 
-}
 button:hover{
     transform: scale(1.1);
     transition: 0.5s ease all;
 }
-.each-cmt{
-  background: rgb(172, 127, 127);
-  border-radius: 10px;
- box-shadow: 2px 2px 4px #888888;
-}
+
 </style>

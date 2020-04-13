@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Create Your Post here</h1>
+    <h1>Write what you will do here</h1>
     <form action>
-      <textarea name id v-model="post"></textarea>
+      <textarea name id v-model="post" cols="60" rows="20"></textarea>
       <p v-if="feedback">{{feedback}}</p>
       <router-link :to="{name:'main'}">
          <button type="submit" @click="submitPost" value="Submit">Submit</button>
@@ -29,7 +29,8 @@ export default {
       if (this.post) {
         db.collection("Posts")
           .add({
-            post: this.post
+            post: this.post,
+            like:0
           })
           .then(() => {
             this.$router.push({
@@ -56,14 +57,30 @@ form {
   flex-direction: column;
 }
 button {
-  background: white;
-  padding: 20px;
-  margin-top: 20px;
-  border: 1px solid black;
-  color: black;
+ 
+    background-color: #56baed;
+   border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+   margin-top:20px ;
 }
 button:hover {
-  transform: scale(1.1);
-  transition: 0.5s ease all;
+ cursor: pointer;
+  background-color: #39ace7;
 }
 </style>

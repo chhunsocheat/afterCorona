@@ -2,17 +2,17 @@
   <div>
     <h1>Your posts</h1>
     <div class="container">
-      <p>{{id}}</p>
+      <!-- <p>{{id}}</p> -->
       <div class="loader-container">
         <div class="loader" v-if="loading"></div>
       </div>
       <h1>{{post}}</h1>
       <p v-if="!loading">Number of Likes: {{like}}</p>
-      <ul>
           <h3>Comments:</h3>
+      <ul class="cmt-container">
           <div class="cmt-container">
           <li class="cmt" v-for="(cmt,i) in comments" :key="i">{{cmt}}</li>
-      </div>
+          </div>
       </ul>
       <h3>Add new Comment Here</h3>
       <h2 v-if="feedback">{{feedback}}</h2>
@@ -104,8 +104,9 @@ export default {
 .container {
     display: flex;
     flex-direction: column;
-  border: 1px solid black;
   margin-bottom: 200px;
+  box-shadow: 5px 5px 10px #797979;
+
 }
 input {
   background: white;
@@ -153,8 +154,13 @@ h2{
     flex-direction: column;
 }
 .cmt{
-    border: solid 1px black;
-    padding: 10px;
+  position: relative;
+  left: 48%;
+  transform: translateX(-50%);
+  margin-right:20px ;
+  padding: 20px;
+  box-shadow: 5px 5px 10px #797979;
+  border-radius: 5px 5px 5px 5px;
 }
 .btn-container{
     margin-bottom: 20px;
@@ -164,14 +170,28 @@ li{
   margin: 10px;
 }
 button {
-  background: white;
-  padding: 20px;
-  margin-top: 20px;
-  border: 1px solid black;
-  color: black;
+  background-color: #56baed;
+   border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 button:hover {
-  transform: scale(1.1);
-  transition: 0.5s ease all;
+  cursor: pointer;
+  background-color: #39ace7;
 }
 </style>

@@ -4,6 +4,7 @@ import SignIn from '@/components/auth/SignIn'
 import SignUp from '@/components/auth/SignUp'
 import Main from '@/components/main/Main'
 import Post from '../components/posts/Post'
+import Profile from '../components/profile1/Profile'
 import CreatePost from '../components/posts/CreatePost'
 import firebase from 'firebase'
 Vue.use(Router)
@@ -38,9 +39,17 @@ const router = new Router({
       }
     },
     {
-      path: '/createPost/:userId',
+      path: '/createPost',
       name: 'createPosts',
       component: CreatePost,
+      meta:{
+        requireAuth:true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
       meta:{
         requireAuth:true
       }

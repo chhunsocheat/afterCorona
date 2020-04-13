@@ -1,83 +1,219 @@
 <template>
-   <div class="hello">
-   <h2>Sign Up</h2>
-            <form>
-           <label for="email">Email</label>
-           <input type="text" name="email" id="" v-model="email">
-           <label for="email">Password</label>
-           <input type="text" name="password" id="" v-model="password">
-           <label for="email">Confirm Password</label>
-           <input type="text" name="confirmPassword" id="" v-model="confirmPassword">
-           <p v-if="feedback">{{feedback}}</p>
-           <button @click.prevent="SignUp">Sign up</button>
-            </form>
-            <p>or</p>
-            <button class="facebook">Login With Facebook</button>
-            <button class="twitter">Login With Twitter</button>
-         
-            <p>Forget Your Password?</p>
-            <router-link :to="{name:'signin'}">
-                <p>Already have account</p>
-            </router-link>
-             
   
-      
+  <div class="hello">
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <router-link :to="{name:'signin'}">
+          <h2 class="inactive underlineHover">Sign In</h2>
+        </router-link>
+        <h2 class="active">Sign Up</h2>
+        <form>
+          <input placeholder="Email" type="text" name="email"  v-model="email" />
+          <input placeholder="Password" type="password" name="password"  v-model="password" />
+          <input placeholder="Name" type="text" name="name"  v-model="name" />
+          
+          <p v-if="getSignUpErrorMessage">{{getSignUpErrorMessage}}</p>
+          <button  @click.prevent="signUp({email,password,name})" class="fadeIn fourth">Sign Up</button>
+         
+        </form>
+        <div id="formFooter">
+          <router-link class="underlineHover" :to="{name:'signin'}">I already have account</router-link> |
+          <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import db from "@/firebase/init"
-import firebase from "firebase"
-import slugify from "slugify"
+import db from "@/firebase/init";
+import firebase from "firebase";
+import slugify from "slugify";
+import {mapGetters,mapActions} from 'vuex'
 export default {
-data(){
+  data() {
     return {
-         email:null,
-      password:null,
-      confirmPassword:null,
-      feedback:null,
-      id:null
-    }
-},
-methods:{
-    SignUp(){
-        firebase.auth().createUserWithEmailAndPassword(this.email,this.password)
-        .then((res)=>{
-            db.collection("Users").add({
-                id:res.user.uid,
-                name:this.email,
-                email:this.email,
-                password:this.password
-            }
-            
-            ).then((doc)=>{
-                this.id=doc.id;
-                this.$router.push({name:'main'})
-            }).catch(err=>{
-                console.log(err);
-                console.log("added user error");
-                
-            })
-            
-        }).catch(err=>{
-            console.log(err);
-            this.feedback=err.message
-            throw new Error("Cant add new Data")
-        })
-    }
-}
-}
+      email: null,
+      password: null,
+      data:null,
+      
+      id: null
+    };
+  },
+  computed:{
+    ...mapGetters([
+      "userId",
+      "getSignUpErrorMessage"
+    ])
+  },
+  methods: {
+    ...mapActions([
+      "signUp"
+    ])
+  }
+};
 </script>
 
-<style>
-form{
-  width: 100%;
+<style scoped>
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+button {
+  background-color: #56baed;
+  border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+button:hover {
+  cursor: pointer;
+  background-color: #39ace7;
+}
+html {
+  background-color: #56baed;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+a {
+  color: #92badd;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+}
+.wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
 }
-form button{
-  margin: 10px;
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+h2.inactive {
+  color: #cccccc;
+}
+
+h2.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #5fbae9;
+}
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+input[type="text"],
+input[type="password"] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type="text"]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[type="text"]:placeholder {
+  color: #cccccc;
+}
+
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #0d0d0d;
+}
+.underlineHover:hover:after {
+  width: 100%;
+}
+/* OTHERS */
+
+*:focus {
+  outline: none;
+}
+
+#icon {
+  width: 60%;
+}
+
+* {
+  box-sizing: border-box;
 }
 </style>
