@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="biggest-container">
     <div class="loader-container">
       <div class="loader" v-if="getLoadingStatus"></div>
     </div>
@@ -15,7 +15,7 @@
             <p>List of Comments:</p>
             <li v-for="(cmt,i) in post.comments" :key="i">
               <span>{{i+1}}.</span>
-              {{cmt}}
+              {{cmt.comment}}
               <br />
             </li>
           </ul>
@@ -55,6 +55,12 @@ export default {
 </script>
 
 <style scoped>
+.biggest-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 span {
   font-size: 20px;
   color: #5cbeff;
@@ -96,7 +102,7 @@ li {
   width: 200px;
   height: 200px;
 
-  border: #3498db 2px solid;
+  border: #3498db 3px solid;
 }
 .each-post {
   display: flex;

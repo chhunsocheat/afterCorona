@@ -1,13 +1,26 @@
 <template>
   <div class="container">
     <div class="profile-container">
-      <img :src="img" alt="" />
+      <img :src="img" alt />
       <h1>Profile</h1>
-      <h3>Email:</h3>
-      <p>{{email}}</p>
-      <h3>Name:</h3>
-      <p>{{name}}</p>
-      <hr>
+      <div class="info-container">
+        <div>
+          <h3>Email:</h3>
+          <p>{{email}}</p>
+        </div>
+        <div>
+          <h3>Name:</h3>
+          <p>{{name}}</p>
+        </div>
+        <div>
+          <h3>Likes:</h3>
+          <p>32</p>
+        </div>
+        <div>
+          <h3>Comments:</h3>
+          <p>3</p>
+        </div>
+      </div>
       <div class="file-input">
         <input
           @change="uploadProfile($event)"
@@ -56,7 +69,7 @@ export default {
       name: null,
       password: null,
       id: this.userId,
-      img: undefined,
+      img: null,
       file: null
     };
   },
@@ -111,9 +124,6 @@ export default {
               (this.img = resUser.imgUrl);
           });
         });
-        if(this.img===undefined){
-          this.img="https://image.flaticon.com/icons/svg/2785/2785836.svg"
-        }
     },
     loadProfile() {
       this.onLoadProfile();
@@ -128,7 +138,13 @@ export default {
 </script>
 
 <style scoped>
-p{
+.info-container{
+  display: grid;
+grid-gap: 60px;
+  grid-template-areas: ". .";
+  margin-bottom: 30px;
+}
+p {
   margin: 0;
   margin-bottom: 10px;
 }
@@ -172,7 +188,7 @@ img {
   height: 300px;
   margin: 30px;
   border-radius: 50%;
-  border: 3px solid #56baed;
+  border: 6px solid #56baed;
 }
 .container {
   display: flex;

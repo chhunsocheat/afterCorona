@@ -1,27 +1,33 @@
 <template>
-  <div>
+  <div class="biggest-container">
+
     <h1>Your posts</h1>
     <div class="container">
+      <img :src="generateImg" alt="">
       <!-- <p>{{id}}</p> -->
       <div class="loader-container">
         <div class="loader" v-if="loading"></div>
       </div>
       <h1>{{post}}</h1>
       <p v-if="!loading">Number of Likes: {{like}}</p>
-          <h3>Comments:</h3>
+      <h3>Comments:</h3>
       <ul class="cmt-container">
-          <div class="cmt-container">
-          <li class="cmt" v-for="(cmt,i) in comments" :key="i">{{cmt}}</li>
-          </div>
+        <div class="cmt-container">
+          <li class="cmt" v-for="(cmt,i) in comments" :key="i">
+            <h4>{{cmt.comment}}</h4>
+            <p class="date">Posted on: {{cmt.date}}</p>
+            <p class="date">Posted by: {{cmt.userId}}</p>
+          </li>
+        </div>
       </ul>
       <h3>Add new Comment Here</h3>
       <h2 v-if="feedback">{{feedback}}</h2>
       <div class="textarea-container">
-        <input v-model="another" name id cols="30" rows="10">
+        <textarea v-model="another" name id cols="30" rows="10" />
       </div>
       <div class="btn-container">
-      <button @click="addLike">Like</button>
-      <button @click="addCmt">Comment</button>
+        <button @click="addLike">Like</button>
+        <button @click="addCmt">Comment</button>
       </div>
     </div>
   </div>
@@ -40,7 +46,7 @@ export default {
       like: null,
       comments: [],
       another: null,
-      feedback:null,
+      feedback: null
     };
   },
   methods: {
@@ -53,7 +59,7 @@ export default {
           this.post = post.post;
           this.loading = false;
           this.like = post.like;
-          this.comments=post.comments
+          this.comments = post.comments;
         });
     },
     addLike() {
@@ -63,50 +69,86 @@ export default {
         .update({
           like: increment
         })
-        .then((doc) => {
+        .then(doc => {
           this.like++;
         });
-        if(this.like===undefined){
-          this.like=0;
-        }
+      if (this.like === undefined) {
+        this.like = 0;
+      }
     },
     addCmt() {
-      if(this.another){
-        
-      if(this.comments===undefined){
-        this.comments=[]
+      if (this.another) {
+        if (this.comments === undefined) {
+          this.comments = [];
+        }
+   let dateObj = new Date();
+
+      let newDate = dateObj.toLocaleString();
+        this.comments.push({
+          comment: this.another,
+          userId: this.getUserDocId,
+          date:newDate
+        });
+        this.another = null;
+
+        db.collection("Posts")
+          .doc(this.id)
+          .set(
+            {
+              comments: this.comments
+            },
+            { merge: true }
+          );
+        this.feedback = null;
+      } else {
+        this.feedback = "Please Input a comment";
       }
-      
-      this.comments.push(this.another);
-      this.another = null;
-    
-      db.collection("Posts")
-      .doc(this.id)
-      .set({
-          comments:this.comments
-      },{merge:true})
-      this.feedback=null
-    }else{
-      this.feedback="Please Input a comment"
-    }
     }
   },
   created() {
     this.getPost();
   },
   computed: {
-    ...mapGetters(["userId"])
+    ...mapGetters(["userId", "getUserDocId"]),
+    generateImg(){
+      return `https://robohash.org/${this.getUserDocId}`
+    },
+    getDate() {
+      let dateObj = new Date();
+
+      let newDate = dateObj.toLocaleString();
+      return newDate;
+    }
   }
 };
 </script>
 
 <style scoped>
+img{
+  margin-top: 20px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  border: #3498db solid 3px;
+}
+.date{
+  font-size: 12px;
+}
+.biggest-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 .container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 200px;
   box-shadow: 5px 5px 10px #797979;
-
+  width: 70vw;
+  border-radius: 5%;
 }
 input {
   background: white;
@@ -116,7 +158,7 @@ input {
   border: 1px solid black;
   color: black;
 }
-h2{
+h2 {
   color: red;
 }
 .textarea-container {
@@ -147,31 +189,30 @@ h2{
     transform: rotate(360deg);
   }
 }
-.cmt-container{
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    flex-direction: column;
+.cmt-container {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-wrap: wrap;
 }
-.cmt{
+.cmt {
   position: relative;
-  left: 48%;
-  transform: translateX(-50%);
-  margin-right:20px ;
+
+  margin-right: 20px;
   padding: 20px;
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
 }
-.btn-container{
-    margin-bottom: 20px;
+.btn-container {
+  margin-bottom: 20px;
 }
-li{
+li {
   list-style: none;
   margin: 10px;
 }
 button {
   background-color: #56baed;
-   border: none;
+  border: none;
   color: white;
   padding: 15px 80px;
   text-align: center;
