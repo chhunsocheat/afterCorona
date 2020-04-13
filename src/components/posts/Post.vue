@@ -8,8 +8,12 @@
       <div class="loader-container">
         <div class="loader" v-if="loading"></div>
       </div>
-      <h1>{{post}}</h1>
+      <h2 class="post">{{post}}</h2>
       <p v-if="!loading">Number of Likes: {{like}}</p>
+      <div class="vote-container">
+        <button @click="addLike">Up Vote</button>
+        <button class="btn-downvote" @click="addLike">Down Vote</button>
+      </div>
       <h3>Comments:</h3>
       <ul class="cmt-container">
         <div class="cmt-container">
@@ -26,7 +30,6 @@
         <textarea v-model="another" name id cols="30" rows="10" />
       </div>
       <div class="btn-container">
-        <button @click="addLike">Like</button>
         <button @click="addCmt">Comment</button>
       </div>
     </div>
@@ -124,6 +127,15 @@ export default {
 </script>
 
 <style scoped>
+.post{
+  margin:15px;
+}
+.btn-downvote{
+  background-color: rgb(255, 94, 94);
+}
+.btn-downvote:hover{
+  background-color: rgb(255, 53, 53);
+}
 img{
   margin-top: 20px;
   border-radius: 50%;
@@ -158,9 +170,7 @@ input {
   border: 1px solid black;
   color: black;
 }
-h2 {
-  color: red;
-}
+
 .textarea-container {
   display: flex;
   justify-content: center;
@@ -230,9 +240,15 @@ button {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+  font-weight: 700;
 }
 button:hover {
   cursor: pointer;
   background-color: #39ace7;
+}
+@media only screen and (max-width: 900px){
+  .post{
+    font-size: 18px;
+  }
 }
 </style>

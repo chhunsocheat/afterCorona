@@ -50,7 +50,7 @@
       </div>
 
       <button @click="uploadProfilePic">Upload</button>
-      <button @click="signOut">Sign Out</button>
+      <button class="btn-signout" @click="signOut">Sign Out</button>
     </div>
   </div>
 </template>
@@ -138,6 +138,15 @@ export default {
 </script>
 
 <style scoped>
+.btn-signout{
+  background-color: rgb(255, 94, 94);
+
+}
+.btn-signout:hover{
+  background-color: rgb(255, 53, 53);
+
+}
+
 .info-container{
   display: grid;
 grid-gap: 60px;

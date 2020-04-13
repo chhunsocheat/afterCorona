@@ -6,10 +6,13 @@
     <ul class="container">
       <li class="each-post" v-for="(post,i) in allPosts" :key="i">
         <!-- {{post.id}} -->
-        <img :src=randomGenerator(i) alt />
-
+        <div class="profile">
+          <img :src="randomGenerator(i)" alt />
+          <h4>{{post.id}}</h4>
+          <h6>{{getDate}}</h6>
+        </div>
         <div class="each-cmt">
-          <h2>After Corona, {{post.post}}</h2>
+          <h3 class="cmt">{{post.post}}</h3>
           <span>Likes: {{post.like}}</span>
           <ul>
             <p>List of Comments:</p>
@@ -32,20 +35,25 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  data(){
-    return{
-      imgSrc:`https://robohash.org/`
-    }
+  data() {
+    return {
+      imgSrc: `https://robohash.org/`
+    };
   },
   computed: {
-    ...mapGetters(["allPosts", "userId", "getLoadingStatus"]),
-   
+     getDate() {
+      let dateObj = new Date();
+
+      let newDate = dateObj.toLocaleString();
+      return newDate;
+    },
+    ...mapGetters(["allPosts", "userId", "getLoadingStatus","getUserDocId"])
   },
   methods: {
     ...mapActions(["loadPosts"]),
-     randomGenerator(i){
-      let random=Math.random()*1;
-      return `https://robohash.org/${i}`
+    randomGenerator(i) {
+      let random = Math.random() * 1;
+      return `https://robohash.org/${i}`;
     }
   },
   created() {
@@ -55,7 +63,20 @@ export default {
 </script>
 
 <style scoped>
-.biggest-container{
+*{
+  
+}
+button{
+  font-weight: 750;
+  letter-spacing: 1px;
+}
+.profile{
+  margin-right:20px ;
+}
+.profile img{
+  margin-top: 20px;
+}
+.biggest-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,11 +117,13 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 .each-post img {
   border-radius: 50%;
   width: 200px;
   height: 200px;
+  background: white;
 
   border: #3498db 3px solid;
 }
@@ -117,8 +140,11 @@ li {
 .each-post:hover {
   transition: 0.5s ease all;
 }
-.each-cmt{
+.each-cmt {
   width: 70%;
+}
+.cmt{
+  
 }
 .btn-containers {
   display: flex;
@@ -152,5 +178,26 @@ li {
 button:hover {
   cursor: pointer;
   background-color: #39ace7;
+}
+@media only screen and (max-width: 900px){
+  .cmt{
+    font-size: 16px;
+  }
+  .each-post img {
+  border-radius: 50%;
+  width: 170px;
+  height: 170px;
+
+  border: #3498db 3px solid;
+}
+.each-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px;
+  width: 80%;
+  box-shadow: 5px 5px 10px #797979;
+  border-radius: 5px 5px 5px 5px;
+}
 }
 </style>
