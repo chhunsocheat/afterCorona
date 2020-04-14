@@ -1,28 +1,31 @@
 <template>
   <div class="biggest-container">
     <div class="loader-container">
-      <div class="loader" v-if="getLoadingStatus"></div>
+      <div v-if="getLoadingStatus">
+      <div class="loader" ></div>
+      <div class="inner-loading"></div>
+      </div>
     </div>
     <ul class="container">
       <li class="each-post" v-for="(post,i) in allPosts" :key="i">
         <!-- {{post.id}} -->
         <div class="profile">
-          <img :src="post.imgUrl" alt />
+          <img loading="lazy" :src="post.imgUrl" alt />
           <p>Posted by:</p>
           <h3>{{post.userName}}</h3>
           <h6>{{post.date}}</h6>
         </div>
         <div class="each-cmt">
-          <h3 class="cmt">{{post.post}}</h3>
+          <p class="cmt">{{post.post}}</p>
           <span>Likes: {{post.like}}</span>
           <ul>
             <p>List of Comments:</p>
             <div class="all-cmt">
-            <li  v-for="(cmt,i) in post.comments" :key="i">
-              <span>{{i+1}}.</span>
-              {{cmt.comment}}
-              <br />
-            </li>
+              <li v-for="(cmt,i) in post.comments" :key="i">
+                <span>{{i+1}}.</span>
+                {{cmt.comment}}
+                <br />
+              </li>
             </div>
           </ul>
           <router-link :to="{name:'posts',params:{postId:post.id}}">
@@ -44,16 +47,21 @@ export default {
     };
   },
   computed: {
-     getDate() {
+    getDate() {
       let dateObj = new Date();
 
       let newDate = dateObj.toLocaleString();
       return newDate;
     },
-    ...mapGetters('auth',["allPosts", "userId", "getLoadingStatus","getUserDocId"])
+    ...mapGetters("auth", [
+      "allPosts",
+      "userId",
+      "getLoadingStatus",
+      "getUserDocId"
+    ])
   },
   methods: {
-    ...mapActions('auth',["loadPosts"]),
+    ...mapActions("auth", ["loadPosts"]),
     randomGenerator(i) {
       let random = Math.random() * 1;
       return `https://robohash.org/${i}`;
@@ -67,34 +75,33 @@ export default {
 
 <style scoped>
 html {
-    overflow: scroll;
-    overflow-x: hidden;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+  background: #ff0000;
 }
-*{
-  
+* {
 }
-.all-cmt{
-overflow: scroll;
-width: 200px;
-height: 150px;
+.all-cmt {
+  overflow: scroll;
+  width: 200px;
+  height: 150px;
 }
-button{
+button {
   font-weight: 750;
   letter-spacing: 1px;
 }
-.profile{
-  margin-right:20px ;
+.profile {
+  margin-right: 20px;
 }
-.profile img{
-  margin-top: 20px;
+.profile img {
+  margin-left: 10px;
 }
 .biggest-container {
   display: flex;
@@ -118,8 +125,14 @@ span {
   border-top: 16px solid #3498db;
   width: 60px;
   height: 60px;
-  animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+  animation: spin 0.5s linear infinite; /* Safari */
+  animation: spin 0.5s linear infinite;
+  margin-top: 200px;
+}
+.inner-loading {
+  
+  position: relative;
+  height: 100vh;
 }
 @keyframes spin {
   0% {
@@ -139,7 +152,6 @@ li {
   align-items: center;
   grid-template-areas: ". .  ";
   grid-gap: 20px;
-  
 }
 .each-post img {
   border-radius: 50%;
@@ -152,7 +164,7 @@ li {
 .each-post {
   display: flex;
   align-items: center;
-  
+
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
 }
@@ -166,15 +178,18 @@ li {
   justify-content: center;
   align-items: center;
 }
-.cmt{
+.cmt {
   display: flex;
   justify-content: center;
-  align-items: center;
+
   margin-top: 20px;
   text-align: center;
   height: 80px;
   width: 300px;
   overflow: scroll;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
 }
 .btn-containers {
   display: flex;
@@ -182,6 +197,7 @@ li {
   align-self: center;
   background: none;
 }
+
 .btn-container button,
 .each-cmt button {
   background-color: #56baed;
@@ -210,52 +226,54 @@ button:hover {
   background-color: #39ace7;
 }
 
-@media only screen and (max-width: 900px){
-  .cmt{
+@media only screen and (max-width: 900px) {
+  .cmt {
     width: 150px;
     font-size: 16px;
   }
   .each-post img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
 
-  border: #3498db 3px solid;
-}
-.each-post {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0px;
-  box-shadow: 5px 5px 10px #797979;
-  border-radius: 5px 5px 5px 5px;
-  padding: 0px 10px 10px 10px;
-}
-.each-cmt{
-  width: 150px;
-}
-.all-cmt{
-overflow: scroll;
-width: 100px;
-height: 120px;
-font-size: 12px;
-}
-.container {
-  display: grid;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  grid-template-areas: ".";
-  padding: 0px;
- 
-}
-.btn-container button,
-.each-cmt button {
-margin: 0px;
-padding: 10px 20px;
-}
-span{
-  font-size: 14px;
-}
+    border: #3498db 3px solid;
+  }
+  .each-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    box-shadow: 5px 5px 10px #797979;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0px 10px 10px 10px;
+  }
+  .each-cmt {
+    width: 150px;
+  }
+  .all-cmt {
+    overflow: scroll;
+    width: 100px;
+    height: 120px;
+    font-size: 12px;
+  }
+  .container {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    grid-template-areas: ".";
+    padding: 0px;
+  }
+  .btn-container button,
+  .each-cmt button {
+    margin: 0px;
+    padding: 10px 20px;
+  }
+  span {
+    font-size: 14px;
+  }
+  .each-cmt ul {
+    padding: 0;
+  }
 }
 </style>

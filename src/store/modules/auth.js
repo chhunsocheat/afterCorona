@@ -11,9 +11,13 @@ const auth ={
          posts: [],
         isLoading:true,
         userInfo:null,
-        test:"hi"
+        test:"hi",
+        isUserSignIn:false
     },
     getters:{
+        getisUserSignIn:(state)=>{
+            return state.isUserSignIn;
+        },
         getUserInfo:(state)=>{
             console.log("user URL getter",state.userInfo);
             return state.userInfo
@@ -73,10 +77,15 @@ const auth ={
                 userName:payload.username,
                 imgUrl:payload.userProfileUrl
             }
+        },
+        changeUserState(state,payload){
+            state.isUserSignIn=payload;
         }
     },
     actions:{
         loadPosts: (context) => {
+            
+            context.commit('checkLoading',true)
             const allPosts=[]
             db.collection("Posts")
             .orderBy('like', "desc")
@@ -124,7 +133,7 @@ const auth ={
                 })
                 router.push({name:'main'})
                 console.log("profile URL",userProfileUrl);
-                
+                context.commit('changeUserState', true);
                 context.commit('submitForm', userId);
                 context.commit('userInfo',{
                     username:userName,userProfileUrl:userProfileUrl
@@ -171,6 +180,7 @@ const auth ={
                       //console.log("database error",userId);
                     router.push({name:'main'})
                     context.commit('signUp', userId);
+                    context.commit('changeUserState', true);
                     context.commit('UserDocId',userDocId)
                     context.commit('userInfo',{
                        

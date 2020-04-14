@@ -3,13 +3,13 @@
   <nav class="container">
       <div class="logo-container">
            <router-link :to="{name:'main'}">
-        <img title="logo" src="../../assets/logo.png" alt />
+        <img  title="logo" src="../../assets/logo.png" alt />
       </router-link>
       </div>
-    <div>
+    <div v-if="getisUserSignIn">
         <router-link :to="{name:'profile'}">
       
-        <img :title="getUserInfo.userName" class="profile" :src="getUserInfo.imgUrl" alt="">
+        <img  :title="getUserInfo.userName" class="profile" :src="getUserInfo.imgUrl" alt="">
     </router-link>
     </div>
   </nav>
@@ -17,16 +17,27 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import {mapActions,mapGetters} from 'vuex'
 export default {
 data(){
     return {
-
+      
     }
+},
+methods:{
+checkIsSignIn(){
+  var user = firebase.auth().currentUser;
+  if (user) {
+    return true;
+  } 
+  return false;
+}
 },
 computed:{
     ...mapGetters('auth',[
-        "getUserInfo"
+        "getUserInfo",
+        "getisUserSignIn"
     ])
 }
 };
@@ -41,6 +52,7 @@ computed:{
     transform: translateX(-50%);
     justify-content: center;
    box-shadow: 0 4px 6px -6px rgba(0, 0, 0, 0.411);
+  background: rgb(174, 227, 253);
 }
 
 .container{
@@ -50,7 +62,6 @@ computed:{
     justify-content: space-between;
 }
 nav {
-  background: rgb(255, 255, 255);
   width: 100%;
   box-sizing: border-box;
   border: none;

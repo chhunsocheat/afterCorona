@@ -40,13 +40,15 @@
     </div>
 
     <AllPosts />
-    
+    <Footer class="footer"/>
   </div>
 </template>
 
 <script>
 //components
 import Nav from "./Nav"
+import Footer from "./Footer"
+
 import AllPosts from "../posts/AllPosts";
 import Profile from "../profile1/Profile";
 //database and store
@@ -57,7 +59,8 @@ export default {
   components: {
     AllPosts,
     Profile,
-    Nav
+    Nav,
+    Footer
   },
   data() {
     return {
@@ -206,6 +209,9 @@ button:hover {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   padding: 13px;
+}
+Footer{
+  margin-top: 30px;
 }
 @media only screen and (max-width: 900px){
 textarea{

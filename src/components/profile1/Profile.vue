@@ -113,6 +113,7 @@ export default {
         .signOut()
         .then(() => {
           this.$router.push({ name: "signin" });
+          this.$store.commit("auth/changeUserState", false);
         });
     },
     onLoadProfile() {
