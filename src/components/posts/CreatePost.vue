@@ -13,7 +13,7 @@
 
 <script>
 import db from "../../firebase/init";
-import { mappGetters, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -22,22 +22,32 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userId"])
+    ...mapGetters('auth',["userId","getUserInfo"])
   },
   methods: {
     submitPost() {
+      let dateObj = new Date();
+      let newDate = dateObj.toLocaleString();
+      console.log('create post',this.getUserInfo.imgUrl);
+      
       if (this.post) {
         db.collection("Posts")
           .add({
+            date:newDate,
+            imgUrl:this.getUserInfo.imgUrl,
+            userName:this.getUserInfo.userName,
             post: this.post,
             like:0
           })
           .then(() => {
             this.$router.push({
-              name: "main",
-              params: { userId: this.userId }
+              name: "main"
             });
-          });
+          })
+          .catch(err=>{
+            console.log(error);
+            
+          })
       } else {
         this.feedback = "Please Enter a post before submitting";
       }

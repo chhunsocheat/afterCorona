@@ -21,6 +21,7 @@
             <h4>{{cmt.comment}}</h4>
             <p class="date">Posted on: {{cmt.date}}</p>
             <p class="date">Posted by: {{cmt.userId}}</p>
+            <p class="date">Posted by: {{cmt.userName}}</p>
           </li>
         </div>
       </ul>
@@ -85,11 +86,11 @@ export default {
           this.comments = [];
         }
    let dateObj = new Date();
-
       let newDate = dateObj.toLocaleString();
         this.comments.push({
           comment: this.another,
           userId: this.getUserDocId,
+          userName:this.getUserInfo.userName,
           date:newDate
         });
         this.another = null;
@@ -112,7 +113,7 @@ export default {
     this.getPost();
   },
   computed: {
-    ...mapGetters(["userId", "getUserDocId"]),
+    ...mapGetters('auth',["userId", "getUserDocId","getUserInfo"]),
     generateImg(){
       return `https://robohash.org/${this.getUserDocId}`
     },

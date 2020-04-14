@@ -16,7 +16,10 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-*{}
+:root{
+  --main-btn-color:#56baed;
+  --main-btn-color-hover:#39ace7;
+}
 .logo{
   margin-top: 30px;
 }

@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>List of Wishes</h1>
+       <router-link :to="{name:'createPosts'}">
     <div class="create-post-container">
       <div class="create-post">
         <img src="https://robohash.org/$" alt />
@@ -33,10 +34,11 @@
               </svg>
             </label>
           </div>
-          <button class="btn-sm-submit">Submit</button>
+          <button class="btn-sm-submit">--></button>
         </div>
       </div>
     </div>
+    </router-link>
 
     <AllPosts />
     <router-link :to="{name:'profile'}">
@@ -68,10 +70,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["allPosts", "userId"])
+    ...mapGetters('auth',["allPosts", "userId"])
   },
   methods: {
-    ...mapActions(["loadPosts"])
+    ...mapActions('auth',["loadPosts"])
   },
   created() {},
   updated() {
@@ -104,6 +106,10 @@ export default {
   background-color: #86c1df;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
 }
+.file-input__label:hover{
+  background: #73bbdf;
+  transition: 0.5s ease all;
+}
 
 .file-input__label svg {
   height: 16px;
@@ -128,6 +134,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 }
 .create-post img {
   margin-right: 20px;
@@ -175,11 +182,13 @@ button {
 }
 
 button:hover {
-  transform: scale(1.1);
+  background-color: var(--main-btn-color-hover);
+  cursor: pointer;
   transition: 0.5s ease all;
 }
 .btn-sm-submit {
-  background-color: #56baed;
+  margin-left: 5px;
+  background-color: var(--main-btn-color);
   border: none;
   color: white;
   padding: 10px 15px;
@@ -187,10 +196,11 @@ button:hover {
   text-decoration: none;
   display: inline-block;
   text-transform: uppercase;
-  font-size: 2px;
+  font-size: 10px;
   -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
+  padding: 13px;
 }
 </style>

@@ -61,7 +61,7 @@ import db from "@/firebase/init";
 import firebase from "firebase";
 export default {
   computed: {
-    ...mapGetters(["allPosts", "userId", "getUserDocId"])
+    ...mapGetters('auth',["allPosts", "userId", "getUserDocId"])
   },
   data() {
     return {

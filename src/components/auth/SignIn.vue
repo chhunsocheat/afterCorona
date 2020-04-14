@@ -43,12 +43,12 @@ export default {
     }
   },
   computed:{
-    ...mapGetters([
+    ...mapGetters('auth',[
       'getErrorMessage'
     ])
   },
   methods:{
-    ...mapActions([
+    ...mapActions('auth',[
       'submitForm'
     ])
   },

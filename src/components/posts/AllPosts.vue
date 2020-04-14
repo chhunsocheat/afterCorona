@@ -7,8 +7,8 @@
       <li class="each-post" v-for="(post,i) in allPosts" :key="i">
         <!-- {{post.id}} -->
         <div class="profile">
-          <img :src="randomGenerator(i)" alt />
-          <h4>{{post.id}}</h4>
+          <img :src="post.imgUrl" alt />
+          <h3>{{post.userName}}</h3>
           <h6>{{getDate}}</h6>
         </div>
         <div class="each-cmt">
@@ -16,11 +16,13 @@
           <span>Likes: {{post.like}}</span>
           <ul>
             <p>List of Comments:</p>
-            <li v-for="(cmt,i) in post.comments" :key="i">
+            <div class="all-cmt">
+            <li  v-for="(cmt,i) in post.comments" :key="i">
               <span>{{i+1}}.</span>
               {{cmt.comment}}
               <br />
             </li>
+            </div>
           </ul>
           <router-link :to="{name:'posts',params:{postId:post.id}}">
             <button class="btn">View</button>
@@ -47,10 +49,10 @@ export default {
       let newDate = dateObj.toLocaleString();
       return newDate;
     },
-    ...mapGetters(["allPosts", "userId", "getLoadingStatus","getUserDocId"])
+    ...mapGetters('auth',["allPosts", "userId", "getLoadingStatus","getUserDocId"])
   },
   methods: {
-    ...mapActions(["loadPosts"]),
+    ...mapActions('auth',["loadPosts"]),
     randomGenerator(i) {
       let random = Math.random() * 1;
       return `https://robohash.org/${i}`;
@@ -63,8 +65,25 @@ export default {
 </script>
 
 <style scoped>
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
 *{
   
+}
+.all-cmt{
+overflow: scroll;
+width: 200px;
+height: 150px;
 }
 button{
   font-weight: 750;
@@ -114,10 +133,10 @@ li {
 }
 .container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
+  
 }
 .each-post img {
   border-radius: 50%;
@@ -129,7 +148,7 @@ li {
 }
 .each-post {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin: 10px 0px;
   width: 80%;
@@ -141,10 +160,20 @@ li {
   transition: 0.5s ease all;
 }
 .each-cmt {
-  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .cmt{
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  text-align: center;
+  height: 80px;
+  width: 600px;
+  overflow: scroll;
 }
 .btn-containers {
   display: flex;

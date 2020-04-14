@@ -10,10 +10,10 @@
         <form>
           <input placeholder="Email" type="text" name="email"  v-model="email" />
           <input placeholder="Password" type="password" name="password"  v-model="password" />
-          <input placeholder="Name" type="text" name="name"  v-model="name" />
-          
+          <input required placeholder="Name" type="text" name="name"  v-model="name" />
+          <p v-if="feedback">{{feedback}}</p>
           <p v-if="getSignUpErrorMessage">{{getSignUpErrorMessage}}</p>
-          <button  @click.prevent="signUp({email,password,name})" class="fadeIn fourth">Sign Up</button>
+          <button  @click.prevent="signUpLocal({email,password,name})" class="fadeIn fourth">Sign Up</button>
          
         </form>
         <div id="formFooter">
@@ -36,20 +36,29 @@ export default {
       email: null,
       password: null,
       data:null,
-      
-      id: null
+      name:null,
+      id: null,
+      feedback:null
     };
   },
   computed:{
-    ...mapGetters([
+    ...mapGetters('auth',[
       "userId",
       "getSignUpErrorMessage"
     ])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('auth',[
       "signUp"
-    ])
+    ]),
+    signUpLocal({email,password,name}){
+      if(name){
+        this.signUp({email,password,name});
+        this.feedback=null;
+      }else{
+        this.feedback="Require Name!!"
+      }
+    }
   }
 };
 </script>
