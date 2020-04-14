@@ -1,11 +1,11 @@
 <template>
   <div>
     <h1>List of Wishes</h1>
-       <router-link :to="{name:'createPosts'}">
     <div class="create-post-container">
+       <router-link :to="{name:'createPosts'}">
       <div class="create-post">
-        <img src="https://robohash.org/$" alt />
-        <textarea cols="40" rows="1" placeholder="Create Post" />
+        <img :src="getUserInfo.imgUrl" alt />
+        <textarea cols="30" rows="1" placeholder="Create Post" />
 
         <div class="btn-sm-container">
           <div class="file-input">
@@ -37,17 +37,19 @@
           <button class="btn-sm-submit">--></button>
         </div>
       </div>
-    </div>
     </router-link>
+    </div>
 
     <AllPosts />
+    <div class="btn-container">
     <router-link :to="{name:'profile'}">
       <button>Profile</button>
     </router-link>
     <router-link :to="{name:'createPosts'}">
       <button>Create Post</button>
     </router-link>
-    <div class="btn-container"></div>
+
+    </div>
   </div>
 </template>
 
@@ -70,12 +72,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('auth',["allPosts", "userId"])
+    ...mapGetters('auth',["allPosts", "userId","getUserInfo"])
   },
   methods: {
-    ...mapActions('auth',["loadPosts"])
+    ...mapActions('auth',["loadPosts"]),
+    loadImgUrl(){
+      return this.userInfo.imgUrl;
+    }
   },
-  created() {},
+  created() {
+    console.log(this.userInfo);
+    
+  },
   updated() {
     // this.onLoadProfile()
   },
@@ -180,7 +188,10 @@ button {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
+.btn-container{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
 button:hover {
   background-color: var(--main-btn-color-hover);
   cursor: pointer;
@@ -202,5 +213,13 @@ button:hover {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   padding: 13px;
+}
+@media only screen and (max-width: 900px){
+textarea{
+
+}
+.btn-sm-container{
+  display: none;
+}
 }
 </style>

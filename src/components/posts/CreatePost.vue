@@ -2,11 +2,10 @@
   <div>
     <h1>Write what you will do here</h1>
     <form action>
-      <textarea name id v-model="post" cols="60" rows="20"></textarea>
+      <textarea v-model="post" cols="60" rows="20" />
       <p v-if="feedback">{{feedback}}</p>
-      <router-link :to="{name:'main'}">
-         <button type="submit" @click="submitPost" value="Submit">Submit</button>
-      </router-link>
+
+      <button type="submit" @click="submitPostLocal" value="Submit">Submit</button>
     </form>
   </div>
 </template>
@@ -22,35 +21,39 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('auth',["userId","getUserInfo"])
+    ...mapGetters("auth", ["userId", "getUserInfo"])
   },
   methods: {
+    submitPostLocal() {
+      if (this.post) {
+        this.submitPost();
+        this.feedback = null;
+      } else {
+        this.feedback = "You need to fill your wish!!";
+      }
+    },
     submitPost() {
       let dateObj = new Date();
       let newDate = dateObj.toLocaleString();
-      console.log('create post',this.getUserInfo.imgUrl);
-      
-      if (this.post) {
-        db.collection("Posts")
-          .add({
-            date:newDate,
-            imgUrl:this.getUserInfo.imgUrl,
-            userName:this.getUserInfo.userName,
-            post: this.post,
-            like:0
-          })
-          .then(() => {
-            this.$router.push({
-              name: "main"
-            });
-          })
-          .catch(err=>{
-            console.log(error);
-            
-          })
-      } else {
-        this.feedback = "Please Enter a post before submitting";
-      }
+      console.log("create post", this.getUserInfo.imgUrl);
+
+      db.collection("Posts")
+        .add({
+          date: newDate,
+          imgUrl: this.getUserInfo.imgUrl,
+          userName: this.getUserInfo.userName,
+          post: this.post,
+          like: 0
+        })
+        .then(() => {
+          this.$router.push({
+            name: "main"
+          });
+        })
+        .catch(err => {
+          console.log(error);
+        });
+      this.feedback = null;
     }
   }
 };
@@ -58,7 +61,7 @@ export default {
 
 <style scoped>
 input {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 form {
   display: flex;
@@ -67,9 +70,8 @@ form {
   flex-direction: column;
 }
 button {
- 
-    background-color: #56baed;
-   border: none;
+  background-color: #56baed;
+  border: none;
   color: white;
   padding: 15px 80px;
   text-align: center;
@@ -87,10 +89,10 @@ button {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-   margin-top:20px ;
+  margin-top: 20px;
 }
 button:hover {
- cursor: pointer;
+  cursor: pointer;
   background-color: #39ace7;
 }
 </style>

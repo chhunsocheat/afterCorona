@@ -10,7 +10,8 @@ const auth ={
         userDocId:null,
          posts: [],
         isLoading:true,
-        userInfo:null
+        userInfo:null,
+        test:"hi"
     },
     getters:{
         getUserInfo:(state)=>{
@@ -39,6 +40,9 @@ const auth ={
         },
     },
     mutations:{
+        changeUrl:(state,payload)=>{
+            state.userInfo.imgUrl=payload
+        },
         loadPosts: (state, allPosts) => {            
             state.posts=allPosts
          },
@@ -65,6 +69,7 @@ const auth ={
         },
         userInfo(state,payload){
             state.userInfo={
+                
                 userName:payload.username,
                 imgUrl:payload.userProfileUrl
             }
@@ -87,6 +92,7 @@ const auth ={
                         like:doc.data().like,
                         userName:doc.data().userName,
                         imgUrl:doc.data().imgUrl,
+                        date:doc.data().date
                     }
                     allPosts.push(postObj)
                 })
@@ -138,6 +144,7 @@ const auth ={
               let userDocId=null
               let userName=null;
               let userProfileUrl=null
+              
             firebase
               .auth()
               .createUserWithEmailAndPassword(payload.email,payload.password)
@@ -148,7 +155,7 @@ const auth ={
                     name: payload.name,
                     email: payload.email,
                     password: payload.password,
-                    imgUrl:"https://image.flaticon.com/icons/svg/1077/1077114.svg"
+                    imgUrl:"https://image.flaticon.com/icons/svg/2785/2785836.svg"
                   })
                   .then(doc => {
                     db.collection("Users")
@@ -156,6 +163,7 @@ const auth ={
                     .get()
                     .then((res)=>{
                       //console.log("inside the added doc",res.data());
+                      //date=res.data().date,
                       userId=res.data().id;
                       userDocId=res.id;
                       userName=res.data().name
@@ -165,6 +173,7 @@ const auth ={
                     context.commit('signUp', userId);
                     context.commit('UserDocId',userDocId)
                     context.commit('userInfo',{
+                       
                         username:userName,userProfileUrl:userProfileUrl
                         })
                     })

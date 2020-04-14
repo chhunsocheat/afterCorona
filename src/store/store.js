@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
         auth
     },
     state: {
-       
+       data:"hi"
       
     },
     plugins: [createPersistedState()],

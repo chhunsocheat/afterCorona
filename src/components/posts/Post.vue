@@ -3,7 +3,7 @@
 
     <h1>Your posts</h1>
     <div class="container">
-      <img :src="generateImg" alt="">
+      <img :src="imgUrl" alt="">
       <!-- <p>{{id}}</p> -->
       <div class="loader-container">
         <div class="loader" v-if="loading"></div>
@@ -12,7 +12,7 @@
       <p v-if="!loading">Number of Likes: {{like}}</p>
       <div class="vote-container">
         <button @click="addLike">Up Vote</button>
-        <button class="btn-downvote" @click="addLike">Down Vote</button>
+        <button class="btn-downvote" @click="addDislike">Down Vote</button>
       </div>
       <h3>Comments:</h3>
       <ul class="cmt-container">
@@ -20,7 +20,6 @@
           <li class="cmt" v-for="(cmt,i) in comments" :key="i">
             <h4>{{cmt.comment}}</h4>
             <p class="date">Posted on: {{cmt.date}}</p>
-            <p class="date">Posted by: {{cmt.userId}}</p>
             <p class="date">Posted by: {{cmt.userName}}</p>
           </li>
         </div>
@@ -60,6 +59,7 @@ export default {
         .get()
         .then(res => {
           let post = res.data();
+          this.imgUrl=post.imgUrl;
           this.post = post.post;
           this.loading = false;
           this.like = post.like;
@@ -79,6 +79,18 @@ export default {
       if (this.like === undefined) {
         this.like = 0;
       }
+    },
+    addDislike() {
+      const decrement = firebase.firestore.FieldValue.increment(-1);
+      db.collection("Posts")
+        .doc(this.id)
+        .update({
+          like: decrement
+        })
+        .then(doc => {
+          this.like--;
+        });
+     
     },
     addCmt() {
       if (this.another) {

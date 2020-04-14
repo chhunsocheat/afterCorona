@@ -8,8 +8,9 @@
         <!-- {{post.id}} -->
         <div class="profile">
           <img :src="post.imgUrl" alt />
+          <p>Posted by:</p>
           <h3>{{post.userName}}</h3>
-          <h6>{{getDate}}</h6>
+          <h6>{{post.date}}</h6>
         </div>
         <div class="each-cmt">
           <h3 class="cmt">{{post.post}}</h3>
@@ -132,10 +133,12 @@ li {
   list-style: none;
 }
 .container {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  grid-template-areas: ". .  ";
+  grid-gap: 20px;
   
 }
 .each-post img {
@@ -148,10 +151,8 @@ li {
 }
 .each-post {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
-  margin: 10px 0px;
-  width: 80%;
+  
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
 }
@@ -172,7 +173,7 @@ li {
   margin-top: 20px;
   text-align: center;
   height: 80px;
-  width: 600px;
+  width: 300px;
   overflow: scroll;
 }
 .btn-containers {
@@ -196,7 +197,7 @@ li {
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
+  margin: 5px 20px 20px 20px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
@@ -208,14 +209,15 @@ button:hover {
   cursor: pointer;
   background-color: #39ace7;
 }
+
 @media only screen and (max-width: 900px){
   .cmt{
     font-size: 16px;
   }
   .each-post img {
   border-radius: 50%;
-  width: 170px;
-  height: 170px;
+  width: 100px;
+  height: 100px;
 
   border: #3498db 3px solid;
 }
@@ -224,9 +226,34 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 10px 0px;
-  width: 80%;
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
+  padding: 0px 10px 10px 10px;
+}
+.each-cmt{
+  width: 150px;
+}
+.all-cmt{
+overflow: scroll;
+width: 100px;
+height: 120px;
+font-size: 12px;
+}
+.container {
+  display: grid;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  grid-template-areas: ".";
+ 
+}
+.btn-container button,
+.each-cmt button {
+margin: 0px;
+padding: 10px 20px;
+}
+span{
+  font-size: 14px;
 }
 }
 </style>
