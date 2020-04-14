@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <router-link :to="{name:'main'}">
-    <img class="logo" src="./assets/logo.png">
-
-    </router-link>
+<Nav/>
     <router-view/>
+    <Footer class="footer"/>
   </div>
 </template>
 
 <script>
+import Nav from './components/main/Nav'
+import Footer from './components/main/Footer'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    Nav,
+    Footer
+  }
 }
 </script>
 
@@ -19,6 +24,9 @@ export default {
 :root{
   --main-btn-color:#56baed;
   --main-btn-color-hover:#39ace7;
+}
+.footer{
+  margin-top: 50px;
 }
 .logo{
   margin-top: 30px;

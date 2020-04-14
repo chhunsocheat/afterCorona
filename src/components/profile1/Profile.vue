@@ -246,13 +246,13 @@ button:hover {
   transition: 0.5s ease all;
 }
 
+@media only screen and (max-width: 900px) {
 .info-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-@media only screen and (max-width: 900px) {
   .profile-container img {
     width: 100px;
     height: 100px;

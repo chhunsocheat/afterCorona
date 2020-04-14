@@ -5,7 +5,7 @@
       <textarea v-model="post" cols="60" rows="20" />
       <p v-if="feedback">{{feedback}}</p>
 
-      <button type="submit" @click="submitPostLocal" value="Submit">Submit</button>
+      <button type="submit" @click.prevent="submitPostLocal" value="Submit">Submit</button>
     </form>
   </div>
 </template>

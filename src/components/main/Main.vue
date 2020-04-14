@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>List of Wishes</h1>
     <div class="create-post-container">
        <router-link :to="{name:'createPosts'}">
       <div class="create-post">
@@ -41,20 +40,13 @@
     </div>
 
     <AllPosts />
-    <div class="btn-container">
-    <router-link :to="{name:'profile'}">
-      <button>Profile</button>
-    </router-link>
-    <router-link :to="{name:'createPosts'}">
-      <button>Create Post</button>
-    </router-link>
-
-    </div>
+    
   </div>
 </template>
 
 <script>
 //components
+import Nav from "./Nav"
 import AllPosts from "../posts/AllPosts";
 import Profile from "../profile1/Profile";
 //database and store
@@ -64,7 +56,8 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AllPosts,
-    Profile
+    Profile,
+    Nav
   },
   data() {
     return {

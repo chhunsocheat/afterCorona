@@ -212,6 +212,7 @@ button:hover {
 
 @media only screen and (max-width: 900px){
   .cmt{
+    width: 150px;
     font-size: 16px;
   }
   .each-post img {
@@ -241,10 +242,11 @@ font-size: 12px;
 }
 .container {
   display: grid;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   grid-template-areas: ".";
+  padding: 0px;
  
 }
 .btn-container button,
