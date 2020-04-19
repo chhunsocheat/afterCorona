@@ -29,6 +29,7 @@
             </div>
           </ul>
           <router-link :to="{name:'posts',params:{postId:post.id}}">
+
             <button class="btn">View</button>
           </router-link>
         </div>
@@ -78,6 +79,7 @@ html {
   overflow: scroll;
   overflow-x: hidden;
 }
+
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
@@ -109,6 +111,7 @@ button {
   align-items: center;
   flex-direction: column;
 }
+
 span {
   font-size: 20px;
   color: #5cbeff;
@@ -164,13 +167,13 @@ li {
 .each-post {
   display: flex;
   align-items: center;
+box-sizing: border-box;
 
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
 }
 
 .each-post:hover {
-  transition: 0.5s ease all;
 }
 .each-cmt {
   display: flex;

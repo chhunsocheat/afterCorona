@@ -56,4 +56,7 @@ footer {
   height: 10vh;
   background: var(--main-btn-color);
 }
+footer i{
+  margin: 0px 10px;
+}
 </style>

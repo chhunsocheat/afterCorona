@@ -1,7 +1,26 @@
 <template>
   <div class="container">
     <div class="profile-container">
-      <img :src="img" alt />
+      <div class="profile">
+        <img :src="img" alt />
+
+        <div class="upload" style="
+          width: 20px;">
+          <input
+            @change="uploadProfile($event)"
+            type="file"
+            name="file-input"
+            id="file-input"
+            class="file-input__input"
+          />
+          <label for="file-input">
+            <i class="fas fa-plus" style="
+          cursor: pointer;"></i>
+          </label>
+        </div>
+      </div>
+      <p v-if="progress">uploading {{progress}}%...</p>
+      <button class="btn-upload" @click="uploadProfilePic">Upload</button>
       <h1>Profile</h1>
       <div class="info-container">
         <div>
@@ -21,35 +40,7 @@
           <p>3</p>
         </div>
       </div>
-      <div class="file-input">
-        <input
-          @change="uploadProfile($event)"
-          type="file"
-          name="file-input"
-          id="file-input"
-          class="file-input__input"
-        />
-        <label class="file-input__label" for="file-input">
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fas"
-            data-icon="upload"
-            class="svg-inline--fa fa-upload fa-w-16"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-          >
-            <path
-              fill="currentColor"
-              d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
-            />
-          </svg>
-          <span>file</span>
-        </label>
-      </div>
 
-      <button @click="uploadProfilePic">Upload</button>
       <button class="btn-signout" @click="signOut">Sign Out</button>
     </div>
   </div>
@@ -71,7 +62,8 @@ export default {
       password: null,
       id: this.userId,
       img: null,
-      file: null
+      file: null,
+      progress: null
     };
   },
   methods: {
@@ -88,7 +80,13 @@ export default {
       let uploadTask = storageRef.put(this.file);
       uploadTask.on(
         "state_changed",
-        snapshot => {},
+        snapshot => {
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.progress = Math.round(progress);
+
+          console.log(this.progress);
+        },
         error => {},
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
@@ -102,6 +100,7 @@ export default {
             console.log("img url", this.img);
             const auth = this.$store.state.auth.userInfo.imgUrl;
             this.$store.commit("auth/changeUrl", this.img);
+            this.progress = null;
             // auth="hi";
           });
         }
@@ -143,8 +142,24 @@ export default {
 </script>
 
 <style scoped>
+.fa-plus {
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+.upload {
+  cursor: pointer;
+  position: relative;
+  top: -22%;
+  right: -70%;
+  background: #56baed;
+  border-radius: 50%;
+  padding: 20px;
+}
 .btn-signout {
   background-color: rgb(255, 94, 94);
+  -webkit-box-shadow: 0 5px 20px 0 rgba(255, 94, 94, 0.658);
+  box-shadow: 0 5px 20px 0 rgba(255, 94, 94, 0.774);
 }
 .btn-signout:hover {
   background-color: rgb(255, 53, 53);
@@ -206,6 +221,8 @@ img {
   display: flex;
   justify-content: center;
 }
+.profile {
+}
 .profile-container {
   margin-top: 50px;
   margin-bottom: 100px;
@@ -242,27 +259,36 @@ button {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+.btn-upload {
+  padding: 13px 35px;
+}
 button:hover {
   transform: scale(1.1);
   transition: 0.5s ease all;
 }
-
-@media only screen and (max-width: 900px) {
-.info-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+h1 {
+  margin-bottom: 30px;
+  border-bottom: #56baed solid 2px;
+  font-size: 40px;
+  letter-spacing: 3px;
 }
+@media only screen and (max-width: 900px) {
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   .profile-container img {
     width: 100px;
     height: 100px;
   }
-  .profile-container{
+
+  .profile-container {
     padding: 10px 30px 10px 30px;
   }
-  .profile-container button{
-    padding: 15px 30px ;
+  .profile-container button {
+    padding: 15px 30px;
   }
   h1 {
     font-size: 20px;
@@ -272,6 +298,30 @@ button:hover {
   }
   p {
     font-size: 10px;
+  }
+  .fa-plus {
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+  }
+  .btn-upload {
+    padding: 10px 25px;
+  }
+  .upload {
+    cursor: pointer;
+    position: relative;
+    top: -30%;
+    right: -65%;
+    background: #56baed;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  h1 {
+    margin-bottom: 10px;
+    border-bottom: #56baed solid 2px;
+  }
+  .btn-signout{
+    padding: 15px 40px;
   }
 }
 </style>

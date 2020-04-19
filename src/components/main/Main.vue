@@ -1,53 +1,47 @@
 <template>
   <div>
     <div class="create-post-container">
-       <router-link :to="{name:'createPosts'}">
-      <div class="create-post">
-        <img :src="getUserInfo.imgUrl" alt />
-        <textarea cols="30" rows="1" placeholder="Create Post" />
+      <router-link :to="{name:'createPosts'}">
+        <div class="create-post">
+          <img :src="getUserInfo.imgUrl" alt />
+          <textarea cols="30" rows="1" placeholder="Create Post" />
 
-        <div class="btn-sm-container">
-          <div class="file-input">
-            <input
-              
-              type="file"
-              name="file-input"
-              id="file-input"
-              class="file-input__input"
-            />
-            <label class="file-input__label" for="file-input">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="upload"
-                class="svg-inline--fa fa-upload fa-w-16"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
-                />
-              </svg>
-            </label>
+          <div class="btn-sm-container">
+            <div class="file-input">
+              <input type="file" name="file-input" id="file-input" class="file-input__input" />
+              <label class="file-input__label" for="file-input">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="upload"
+                  class="svg-inline--fa fa-upload fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+                  />
+                </svg>
+              </label>
+            </div>
+            <button class="btn-sm-submit">--></button>
           </div>
-          <button class="btn-sm-submit">--></button>
         </div>
-      </div>
-    </router-link>
+      </router-link>
     </div>
-
+<h1 class="title">Top Posts</h1>
     <AllPosts />
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 
 <script>
 //components
-import Nav from "./Nav"
-import Footer from "./Footer"
+import Nav from "./Nav";
+import Footer from "./Footer";
 
 import AllPosts from "../posts/AllPosts";
 import Profile from "../profile1/Profile";
@@ -68,17 +62,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('auth',["allPosts", "userId","getUserInfo"])
+    ...mapGetters("auth", ["allPosts", "userId", "getUserInfo"])
   },
   methods: {
-    ...mapActions('auth',["loadPosts"]),
-    loadImgUrl(){
+    ...mapActions("auth", ["loadPosts"]),
+    loadImgUrl() {
       return this.userInfo.imgUrl;
     }
   },
   created() {
     console.log(this.userInfo);
-    
   },
   updated() {
     // this.onLoadProfile()
@@ -91,6 +84,10 @@ export default {
 </script>
 
 <style scoped>
+.title{
+  margin: 20px 0px;
+  font-size: 40px;
+}
 .file-input__input {
   width: 0.1px;
   height: 0.1px;
@@ -110,7 +107,7 @@ export default {
   background-color: #86c1df;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
 }
-.file-input__label:hover{
+.file-input__label:hover {
   background: #73bbdf;
   transition: 0.5s ease all;
 }
@@ -123,10 +120,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left:20px;
+  margin-left: 20px;
 }
 .create-post-container {
-  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,14 +173,14 @@ button {
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
- 
+
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-.btn-container{
+.btn-container {
   margin-top: 50px;
   margin-bottom: 50px;
 }
@@ -210,15 +206,14 @@ button:hover {
   border-radius: 5px 5px 5px 5px;
   padding: 13px;
 }
-Footer{
+footer {
   margin-top: 30px;
 }
-@media only screen and (max-width: 900px){
-textarea{
-
-}
-.btn-sm-container{
-  display: none;
-}
+@media only screen and (max-width: 900px) {
+  textarea {
+  }
+  .btn-sm-container {
+    display: none;
+  }
 }
 </style>
