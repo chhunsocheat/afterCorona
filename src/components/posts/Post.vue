@@ -33,41 +33,7 @@
         <button @click="addCmt">Comment</button>
       </div>
     </div>
-     <div class="biggest-container">
-
-    <h1>Your posts</h1>
-    <div class="container">
-      <img :src="imgUrl" alt="">
-      <!-- <p>{{id}}</p> -->
-      <div class="loader-container">
-        <div class="loader" v-if="loading"></div>
-      </div>
-      <h2 class="post">{{post}}</h2>
-      <div class="vote-container">
-        <button class="btn-vote" @click="addLike">Up Vote</button>
-      <h4 class="number-of-likes" v-if="!loading">Number of Likes: {{like}}</h4>
-        <button class="btn-downvote" @click="addDislike">Down Vote</button>
-      </div>
-      <h3>Comments:</h3>
-      <ul class="cmt-container">
-        <div class="cmt-container">
-          <li class="cmt" v-for="(cmt,i) in comments" :key="i">
-            <h4>{{cmt.comment}}</h4>
-            <p class="date">Posted on: {{cmt.date}}</p>
-            <p class="date">Posted by: {{cmt.userName}}</p>
-          </li>
-        </div>
-      </ul>
-      <h3>Add new Comment Here</h3>
-      <h2 v-if="feedback">{{feedback}}</h2>
-      <div class="textarea-container">
-        <textarea v-model="another" name id cols="30" rows="10" />
-      </div>
-      <div class="btn-container">
-        <button @click="addCmt">Comment</button>
-      </div>
-    </div>
-  </div>
+    
   </div>
   
 </template>

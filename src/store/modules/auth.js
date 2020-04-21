@@ -4,11 +4,11 @@ import firebase from 'firebase'
 const auth ={
     namespaced: true,
     state:{
+        posts: [],
         userId:null,
         signInError:null,
         signUpError:null,
         userDocId:null,
-         posts: [],
         isLoading:true,
         userInfo:null,
         test:"hi",
@@ -44,12 +44,12 @@ const auth ={
         },
     },
     mutations:{
-        changeUrl:(state,payload)=>{
-            state.userInfo.imgUrl=payload
-        },
         loadPosts: (state, allPosts) => {            
             state.posts=allPosts
          },
+        changeUrl:(state,payload)=>{
+            state.userInfo.imgUrl=payload
+        },
          checkLoading(state,isLoading){
             state.isLoading=isLoading;
         },
