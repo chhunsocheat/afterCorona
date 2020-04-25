@@ -87,17 +87,21 @@ export default {
 
           console.log(this.progress);
         },
-        error => {},
+        error => { 
+          console.log(error);
+          
+        },
         () => {
+          
           uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-            db.collection("Users")
+             db.collection("Users")
               .doc(this.getUserDocId)
               .update({
                 imgUrl: downloadURL
               });
 
             this.img = downloadURL;
-            console.log("img url", this.img);
+            console.log("img url new", this.img);
             const auth = this.$store.state.auth.userInfo.imgUrl;
             this.$store.commit("auth/changeUrl", this.img);
             this.progress = null;

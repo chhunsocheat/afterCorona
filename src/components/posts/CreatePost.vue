@@ -139,7 +139,7 @@ button:hover {
 }
 #b1 {
   cursor: pointer;
-  padding: 15px;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

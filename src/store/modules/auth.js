@@ -135,6 +135,7 @@ const auth ={
                 console.log("profile URL",userProfileUrl);
                 context.commit('changeUserState', true);
                 context.commit('submitForm', userId);
+                context.commit('UserDocId',userDocId)
                 context.commit('userInfo',{
                     username:userName,userProfileUrl:userProfileUrl
                     })
