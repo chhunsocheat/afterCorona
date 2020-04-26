@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueLazyload from 'vue-lazyload'
 import {store} from './store/store'
 import firebase from 'firebase'
+Vue.use(VueLazyload)
 Vue.config.productionTip = false
 
 let app=null;

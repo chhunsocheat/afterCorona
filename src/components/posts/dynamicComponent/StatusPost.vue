@@ -22,7 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["userId", "getUserInfo"])
+    ...mapGetters("auth", ["userId", "getUserInfo","getUserDocId"])
   },
   methods: {
     submitPostLocal() {
@@ -49,7 +49,7 @@ export default {
         })
         .then(() => {
           this.$router.push({
-            name: "main"
+            name: "mainimage"
           });
         })
         .catch(err => {

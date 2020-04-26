@@ -242,7 +242,7 @@ button:hover {
     margin: 10px 0px;
     box-shadow: 5px 5px 10px #797979;
     border-radius: 5px 5px 5px 5px;
-    padding: 0px 10px 10px 10px;
+    padding: 10px 80px 20px 80px;
   }
   .each-cmt {
     width: 150px;
@@ -272,5 +272,11 @@ button:hover {
   .each-cmt ul {
     padding: 0;
   }
+}
+@media only screen and (max-width: 800px) {
+.each-post{
+    padding: 10px 20px 20px 0px;
+
+}
 }
 </style>
