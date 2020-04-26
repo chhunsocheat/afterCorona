@@ -40,6 +40,7 @@ export default {
 
       db.collection("Posts")
         .add({
+          userId:this.getUserDocId,
           date: newDate,
           imgUrl: this.getUserInfo.imgUrl,
           userName: this.getUserInfo.userName,

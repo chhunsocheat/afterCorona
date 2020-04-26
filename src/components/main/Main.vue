@@ -1,5 +1,8 @@
 <template>
   <div>
+    <router-link :to="{name:'mainimage'}">
+      <button>Post image</button>
+    </router-link>
     <div class="create-post-container">
       <router-link :to="{name:'createPosts'}">
         <div class="create-post">

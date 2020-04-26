@@ -4,6 +4,7 @@ import firebase from 'firebase'
 const auth ={
     namespaced: true,
     state:{
+        imagePosts:[],
         posts: [],
         userId:null,
         signInError:null,
@@ -15,6 +16,9 @@ const auth ={
         isUserSignIn:false
     },
     getters:{
+        getImagePosts(state){
+            return state.imagePosts;
+          },
         getisUserSignIn:(state)=>{
             return state.isUserSignIn;
         },
@@ -80,10 +84,45 @@ const auth ={
         },
         changeUserState(state,payload){
             state.isUserSignIn=payload;
-        }
+        },
+        loadImagePosts(state,allImagePosts){
+            state.imagePosts=allImagePosts;
+        },
     },
     actions:{
+        loadImagePosts: (context) => {
+            console.log("hi");
+            
+            context.commit('checkLoading',true)
+            const allImagePosts=[]
+            db.collection("PostsImage")
+            .orderBy('like', "desc")
+            .get()
+            .then(allDoc=>{
+                allDoc.forEach(doc=>{
+                    console.log(doc.data());
+                    
+                    const postObj={
+                        id:doc.id,
+                        post:doc.data().post,
+                        comments:doc.data().comments,
+                        like:doc.data().like,
+                        userName:doc.data().userName,
+                        imgUrl:doc.data().imgUrl,
+                        date:doc.data().date,
+                        postImage:doc.data().postImage
+                    }
+                    allImagePosts.push(postObj)
+                })
+                   // console.log("all cmt",allCmt);
+                    
+               let isLoading=false;
+                   context.commit('checkLoading',isLoading)
+            })
+                context.commit('loadImagePosts', allImagePosts);
+        },
         loadPosts: (context) => {
+            console.log("load post");
             
             context.commit('checkLoading',true)
             const allPosts=[]

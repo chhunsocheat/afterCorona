@@ -73,6 +73,8 @@ export default {
     },
     uploadProfile(event) {
       this.file = event.target.files[0];
+      console.log("profile image",this.file);
+      
     },
     uploadProfilePic() {
       let img = this.img;

@@ -44,10 +44,7 @@ export default {
     ...mapGetters("auth", ["userId", "getUserInfo"])
   },
   methods: {
-    classToggle() {
-      this.isActive1 = !this.isActive1;
-      this.isActive2 = !this.isActive2;
-    },
+    
     submitPostLocal() {
       if (this.post) {
         this.submitPost();
@@ -97,7 +94,7 @@ export default {
   margin-left: auto;
   min-height: 10em;
   width: 90%;
-  height: 50%;
+  height: 60%;
   background: #aee3fd;
   border-radius: 15px;
 }

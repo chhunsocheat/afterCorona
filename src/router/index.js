@@ -6,6 +6,10 @@ import Main from '@/components/main/Main'
 import Post from '../components/posts/Post'
 import Profile from '../components/profile1/Profile'
 import CreatePost from '../components/posts/CreatePost'
+import PostImage from "../components/posts/PostImage"
+
+
+
 import firebase from 'firebase'
 Vue.use(Router)
 
@@ -50,6 +54,14 @@ const router = new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
+      meta:{
+        requireAuth:true
+      }
+    },
+    {
+      path: '/mainimage',
+      name: 'mainimage',
+      component: PostImage,
       meta:{
         requireAuth:true
       }

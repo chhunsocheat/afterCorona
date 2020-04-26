@@ -2,8 +2,8 @@
   <div class="biggest-container">
     <div class="loader-container">
       <div v-if="getLoadingStatus">
-      <div class="loader" ></div>
-      <div class="inner-loading"></div>
+        <div class="loader"></div>
+        <div class="inner-loading"></div>
       </div>
     </div>
     <ul class="container">
@@ -29,7 +29,6 @@
             </div>
           </ul>
           <router-link :to="{name:'posts',params:{postId:post.id}}">
-
             <button class="btn">View</button>
           </router-link>
         </div>
@@ -62,11 +61,7 @@ export default {
     ])
   },
   methods: {
-    ...mapActions("auth", ["loadPosts"]),
-    randomGenerator(i) {
-      let random = Math.random() * 1;
-      return `https://robohash.org/${i}`;
-    }
+    ...mapActions("auth", ["loadPosts"])
   },
   created() {
     this.loadPosts();
@@ -133,7 +128,6 @@ span {
   margin-top: 200px;
 }
 .inner-loading {
-  
   position: relative;
   height: 100vh;
 }
@@ -167,7 +161,7 @@ li {
 .each-post {
   display: flex;
   align-items: center;
-box-sizing: border-box;
+  box-sizing: border-box;
 
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
