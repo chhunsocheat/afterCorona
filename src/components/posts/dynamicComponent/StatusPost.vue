@@ -13,7 +13,7 @@
 <script>
 import db from "../../../firebase/init";
 import { mapGetters, mapActions } from "vuex";
-
+import moment from "moment"
 export default {
   data() {
     return {
@@ -49,7 +49,7 @@ export default {
         })
         .then(() => {
           this.$router.push({
-            name: "mainimage"
+            name: "main"
           });
         })
         .catch(err => {

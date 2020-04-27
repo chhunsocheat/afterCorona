@@ -3,7 +3,7 @@
     <router-link :to="{name:'createPosts'}">
       <div class="create-post">
         <img :src="getUserInfo.imgUrl" alt />
-        <textarea cols="30" rows="1" placeholder="Create Post" />
+        <textarea cols="20" rows="1" placeholder="Create Post" />
         <button>Submit</button>
       </div>
     </router-link>

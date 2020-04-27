@@ -6,7 +6,8 @@ import Main from '@/components/main/Main'
 import Post from '../components/posts/Post'
 import Profile from '../components/profile1/Profile'
 import CreatePost from '../components/posts/CreatePost'
-import PostImage from "../components/posts/PostImage"
+import PostImage from "../components/posts/AllPostImage"
+import EachPostImage from "../components/posts/EachPostImage"
 
 
 
@@ -62,6 +63,14 @@ const router = new Router({
       path: '/mainimage',
       name: 'mainimage',
       component: PostImage,
+      meta:{
+        requireAuth:true
+      }
+    },
+    {
+      path: '/mainimage/:imagePostId',
+      name: 'imagepost',
+      component: EachPostImage,
       meta:{
         requireAuth:true
       }

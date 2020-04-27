@@ -1,72 +1,97 @@
 <template>
   <div class="biggest-container">
+    <div class="profile">
+      <img :src="imgUrl" alt />
+      <div class="user-info">
+        <p>posted by {{userName}}</p>
 
-    <h1>Your posts</h1>
-    <div class="container">
-      <img :src="imgUrl" alt="">
-      <!-- <p>{{id}}</p> -->
-      <div class="loader-container">
-        <div class="loader" v-if="loading"></div>
+        <h4>{{date}}</h4>
       </div>
-      <h2 class="post">{{post}}</h2>
-      <div class="vote-container">
-        <button class="btn-vote" @click="addLike">Up Vote</button>
-      <h4 class="number-of-likes" v-if="!loading">Number of Likes: {{like}}</h4>
-        <button class="btn-downvote" @click="addDislike">Down Vote</button>
+    </div>
+    <div>
+      <div class="post-like">
+        <div>
+          <i @click="addLike" class="fas fa-arrow-up"></i>
+          <p>{{like}}</p>
+          <i @click="addDislike" class="fas fa-arrow-down"></i>
+        </div>
+        <h3>{{post}}</h3>
       </div>
-      <h3>Comments:</h3>
-      <ul class="cmt-container">
+    </div>
+    <img class="postImage" v-lazy="postImage" lazy="loading" alt />
+    <ul class="cmt-container">
         <div class="cmt-container">
           <li class="cmt" v-for="(cmt,i) in comments" :key="i">
-            <p class="date">{{cmt.userName}}</p>
-            <h4>{{cmt.comment}}</h4>
-            <p v-if="!cmt.fromNow" class="date">a few seconds ago</p>
-            <p>{{cmt.fromNow}}</p>
+            <p class="date" style="font-size:12px;">{{cmt.userName}}</p>
+             <h4>{{cmt.comment}}</h4>
+            <p v-if="!cmt.fromNow" class="date" style="font-size:12px;">seconds ago</p>
+            <p class="date" style="font-size:12px;">{{cmt.fromNow}}</p>
           </li>
         </div>
       </ul>
-      <h3>Add new Comment Here</h3>
-      <h2 v-if="feedback">{{feedback}}</h2>
-      <div class="textarea-container">
-        <textarea v-model="another" name id cols="30" rows="10" />
-      </div>
-      <div class="btn-container">
-        <button @click="addCmt">Comment</button>
-      </div>
+    <h5>
+      Comment as
+      <p style="color:#3498db;">{{getUserInfo.userName}}</p>
+    </h5>
+    <h2 v-if="feedback">{{feedback}}</h2>
+    <div class="textarea-container">
+      <textarea v-model="another" name id cols="30" rows="10" placeholder="Your Thoughts" />
     </div>
-    
+    <div class="btn-container">
+      <button @click="addCmt">Comment</button>
+    </div>
+    <!-- <button @click="checkDate">click for date</button> -->
   </div>
-  
 </template>
 
 <script>
+import {mapActions,mapGetters} from "vuex"
+import moment from 'moment'
 import db from "../../firebase/init";
-import firebase from "firebase";
-import { mapGetters, mapActions } from "vuex";
-import moment from "moment"
+import firebase from "firebase"
 export default {
   data() {
     return {
       post: null,
-      id: this.$route.params.postId,
+      id: this.$route.params.imagePostId,
       loading: true,
       like: null,
       comments: [],
       another: null,
-      feedback: null
+      feedback: null,
+      postImage: null,
+      userID: null,
+      userName: null,
+      date:null,
+      imgUrl:null
     };
   },
+  computed:{
+      ...mapGetters("auth",[
+          "getUserInfo"
+      ]),
+      ...mapGetters('auth',["userId", "getUserDocId","getUserInfo"])
+  },
   methods: {
+      checkDate(){
+          let fromNow=moment(this.date).fromNow();
+          console.log(fromNow);
+          
+      },
     getPost() {
-      db.collection("Posts")
+      db.collection("PostsImage")
         .doc(this.id)
         .get()
         .then(res => {
           let post = res.data();
-          this.imgUrl=post.imgUrl;
+          this.imgUrl = post.imgUrl;
           this.post = post.post;
           this.loading = false;
           this.like = post.like;
+          this.postImage = post.postImage;
+          this.userID = post.userIdInfo;
+          this.userName = post.userName;
+          this.date=moment(post.date).fromNow();
           this.comments = post.comments;
           this.comments.map(comment=>{//converting every date to reletive date 
             let fromNow=moment(comment.date).fromNow();
@@ -78,7 +103,7 @@ export default {
     },
     addLike() {
       const increment = firebase.firestore.FieldValue.increment(1);
-      db.collection("Posts")
+      db.collection("PostsImage")
         .doc(this.id)
         .update({
           like: increment
@@ -92,7 +117,7 @@ export default {
     },
     addDislike() {
       const decrement = firebase.firestore.FieldValue.increment(-1);
-      db.collection("Posts")
+      db.collection("PostsImage")
         .doc(this.id)
         .update({
           like: decrement
@@ -117,7 +142,7 @@ export default {
         });
         this.another = null;
 
-        db.collection("Posts")
+        db.collection("PostsImage")
           .doc(this.id)
           .set(
             {
@@ -125,7 +150,7 @@ export default {
             },
             { merge: true }
           );
-          
+            
         this.feedback = null;
       } else {
         this.feedback = "Please Input a comment";
@@ -134,72 +159,21 @@ export default {
   },
   created() {
     this.getPost();
-  },
-  computed: {
-    ...mapGetters('auth',["userId", "getUserDocId","getUserInfo"]),
-    generateImg(){
-      return `https://robohash.org/${this.getUserDocId}`
-    },
-    getDate() {
-      let dateObj = new Date();
-
-      let newDate = dateObj.toLocaleString();
-      return newDate;
-    }
   }
 };
 </script>
 
 <style scoped>
-.post{
-  margin:15px;
-}
-.btn-downvote{
-  background-color: rgb(255, 94, 94);
-}
-.btn-downvote:hover{
-  background-color: rgb(255, 53, 53);
-}
-img{
-  margin-top: 20px;
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-  border: #3498db solid 3px;
-}
 .date{
-  font-size: 12px;
+    font-size: 12px;
+    margin-top:5px;
 }
-.biggest-container{
+.post-like {
+    margin-left: 20px;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 }
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 200px;
-  box-shadow: 5px 5px 10px #797979;
-  width: 70vw;
-  border-radius: 5%;
-}
-input {
-  background: white;
-  padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 15px;
-  border: 1px solid black;
-  color: black;
-}
-
-.textarea-container {
-  display: flex;
-  justify-content: center;
-}
-
 .loader-container {
   display: flex;
   justify-content: center;
@@ -214,6 +188,23 @@ input {
   height: 60px;
   animation: spin 0.5s linear infinite; /* Safari */
   animation: spin 0.5s linear infinite;
+  margin-top: 200px;
+}
+img[lazy="loading"] {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 60px;
+  height: 60px;
+  animation: spin 0.2s linear infinite; /* Safari */
+  animation: spin 0.2s linear infinite;
+  padding: 10px;
+  margin: 50px;
+}
+.inner-loading {
+  position: relative;
+  height: 100vh;
 }
 @keyframes spin {
   0% {
@@ -222,6 +213,54 @@ input {
   100% {
     transform: rotate(360deg);
   }
+}
+.biggest-container {
+  padding-top: 10px;
+  width: 55%;
+  box-shadow: 5px 5px 10px #79797957;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profile {
+  margin: 20px 10px 10px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+h3 {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  padding-left: 30px;
+}
+.each-post {
+  box-shadow: 5px 5px 10px #79797957;
+  width: 80%;
+  max-width: 60%;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 40%;
+  border: 1px solid transparent;
+  padding: 10px;
+}
+.each-post:hover {
+  border: #3498db 1px solid;
+  cursor: pointer;
+}
+.profile img {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #3498db;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.postImage {
+  max-width: 700px;
+  max-height: 600px;
 }
 .cmt-container {
   display: flex;
@@ -270,40 +309,23 @@ button:hover {
   cursor: pointer;
   background-color: #39ace7;
 }
-.btn-upvote{
-  margin-bottom: 10px;
-}
-@media only screen and (max-width: 900px){
-  .btn-upvote{
-  margin-bottom: 0px;
-}
-  .post{
-    font-size: 18px;
+@media only screen and (max-width: 1050px) {
+  .postImage {
+    width: 300px;
+    max-height: 300px;
   }
-  .container{
-    padding: 20px;
+  .biggest-container {
+      min-width: 360px;
   }
-  button {
-  background-color: #56baed;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 20px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  font-weight: 700;
+  .cmt{
+      width: 100px;
+  }
 }
+@media only screen and (max-width: 1250px) {
+  .postImage {
+    max-width: 500px;
+    max-height: 300px;
+  }
+  
 }
 </style>

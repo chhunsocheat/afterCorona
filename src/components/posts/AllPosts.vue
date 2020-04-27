@@ -39,7 +39,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-
+import moment from "moment"
 export default {
   data() {
     return {
@@ -47,12 +47,7 @@ export default {
     };
   },
   computed: {
-    getDate() {
-      let dateObj = new Date();
-
-      let newDate = dateObj.toLocaleString();
-      return newDate;
-    },
+   
     ...mapGetters("auth", [
       "allPosts",
       "userId",
@@ -162,12 +157,14 @@ li {
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  border: 1px solid transparent;
 
   box-shadow: 5px 5px 10px #797979;
   border-radius: 5px 5px 5px 5px;
 }
 
 .each-post:hover {
+  border: #3498db 1px solid;
 }
 .each-cmt {
   display: flex;

@@ -73,7 +73,7 @@ export default {
         })
         .then(() => {
           this.$router.push({
-            name: "main"
+            name: "mainimage"
           });
         })
         .catch(err => {

@@ -1,6 +1,7 @@
 import db from "../../firebase/init"
 import router from '../../router/index'
 import firebase from 'firebase'
+import moment from "moment"
 const auth ={
     namespaced: true,
     state:{
@@ -109,8 +110,9 @@ const auth ={
                         like:doc.data().like,
                         userName:doc.data().userName,
                         imgUrl:doc.data().imgUrl,
-                        date:doc.data().date,
-                        postImage:doc.data().postImage
+                        date:moment(doc.data().date).fromNow(),
+                        postImage:doc.data().postImage,
+                        userIdInfo:doc.data().userIdInfo,
                     }
                     allImagePosts.push(postObj)
                 })
@@ -140,7 +142,8 @@ const auth ={
                         like:doc.data().like,
                         userName:doc.data().userName,
                         imgUrl:doc.data().imgUrl,
-                        date:doc.data().date
+                        date:moment(doc.data().date).fromNow(),
+                        userIdInfo:doc.data().userIdInfo,
                     }
                     allPosts.push(postObj)
                 })
