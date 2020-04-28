@@ -8,12 +8,13 @@
 <script>
 import Nav from './components/main/Nav'
 import Footer from './components/main/Footer'
-
+import NavPost from './components/main/NavPost'
 export default {
   name: 'App',
   components:{
     Nav,
-    Footer
+    Footer,
+    NavPost
   }
 }
 </script>

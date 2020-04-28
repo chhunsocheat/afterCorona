@@ -1,55 +1,64 @@
 <template>
-  <div class="biggest-container">
-    <div class="profile">
-      <img :src="imgUrl" alt />
-      <div class="user-info">
-        <p>posted by {{userName}}</p>
+  <div>
+    <div class="biggest-container">
+      <div class="profile">
+        <img :src="imgUrl" alt />
+        <div class="user-info">
+          <p>posted by {{userName}}</p>
 
-        <h4>{{date}}</h4>
-      </div>
-    </div>
-    <div>
-      <div class="post-like">
-        <div>
-          <i @click="addLike" class="fas fa-arrow-up"></i>
-          <p>{{like}}</p>
-          <i @click="addDislike" class="fas fa-arrow-down"></i>
+          <h4>{{date}}</h4>
         </div>
-        <h3>{{post}}</h3>
       </div>
-    </div>
-    <img class="postImage" v-lazy="postImage" lazy="loading" alt />
-    <ul class="cmt-container">
+      <div>
+        <div class="post-like">
+          <div>
+            <i @click="addLike" class="fas fa-arrow-up"></i>
+            <p>{{like}}</p>
+            <i @click="addDislike" class="fas fa-arrow-down"></i>
+          </div>
+          <h3>{{post}}</h3>
+        </div>
+      </div>
+      <img class="postImage" v-lazy="postImage" lazy="loading" alt />
+      <h4>Comments</h4>
+      <ul class="cmt-container">
         <div class="cmt-container">
           <li class="cmt" v-for="(cmt,i) in comments" :key="i">
             <p class="date" style="font-size:12px;">{{cmt.userName}}</p>
-             <h4>{{cmt.comment}}</h4>
+            <h4>{{cmt.comment}}</h4>
             <p v-if="!cmt.fromNow" class="date" style="font-size:12px;">seconds ago</p>
             <p class="date" style="font-size:12px;">{{cmt.fromNow}}</p>
           </li>
         </div>
       </ul>
-    <h5>
-      Comment as
-      <p style="color:#3498db;">{{getUserInfo.userName}}</p>
-    </h5>
-    <h2 v-if="feedback">{{feedback}}</h2>
-    <div class="textarea-container">
-      <textarea v-model="another" name id cols="30" rows="10" placeholder="Your Thoughts" />
+      <h5>
+        Comment as
+        <p style="color:#3498db;">{{getUserInfo.userName}}</p>
+      </h5>
+      <h2 v-if="feedback">{{feedback}}</h2>
+      <div class="textarea-container">
+        <textarea v-model="another" name id cols="30" rows="10" placeholder="Your Thoughts" />
+      </div>
+      <div class="btn-container">
+        <button @click="addCmt">Comment</button>
+      </div>
+      <!-- <button @click="checkDate">click for date</button> -->
     </div>
-    <div class="btn-container">
-      <button @click="addCmt">Comment</button>
-    </div>
-    <!-- <button @click="checkDate">click for date</button> -->
+    <Footer />
   </div>
 </template>
 
 <script>
-import {mapActions,mapGetters} from "vuex"
-import moment from 'moment'
+import { mapActions, mapGetters } from "vuex";
+import Footer from "../../components/main/Footer";
+import moment from "moment";
 import db from "../../firebase/init";
-import firebase from "firebase"
+import firebase from "firebase";
+
 export default {
+  components: {
+    Footer
+  },
   data() {
     return {
       post: null,
@@ -62,22 +71,20 @@ export default {
       postImage: null,
       userID: null,
       userName: null,
-      date:null,
-      imgUrl:null
+      date: null,
+      imgUrl: null,
+      commentLength:0,
     };
   },
-  computed:{
-      ...mapGetters("auth",[
-          "getUserInfo"
-      ]),
-      ...mapGetters('auth',["userId", "getUserDocId","getUserInfo"])
+  computed: {
+    ...mapGetters("auth", ["getUserInfo"]),
+    ...mapGetters("auth", ["userId", "getUserDocId", "getUserInfo"])
   },
   methods: {
-      checkDate(){
-          let fromNow=moment(this.date).fromNow();
-          console.log(fromNow);
-          
-      },
+    checkDate() {
+      let fromNow = moment(this.date).fromNow();
+      console.log(fromNow);
+    },
     getPost() {
       db.collection("PostsImage")
         .doc(this.id)
@@ -91,14 +98,16 @@ export default {
           this.postImage = post.postImage;
           this.userID = post.userIdInfo;
           this.userName = post.userName;
-          this.date=moment(post.date).fromNow();
+          this.date = moment(post.date).fromNow();
           this.comments = post.comments;
-          this.comments.map(comment=>{//converting every date to reletive date 
-            let fromNow=moment(comment.date).fromNow();
-            console.log("from now",fromNow);
-            
-            return comment.fromNow=fromNow;
-          })
+          this.commentLength=this.comments.length;
+          this.comments.map(comment => {
+            //converting every date to reletive date
+            let fromNow = moment(comment.date).fromNow();
+            console.log("from now", fromNow);
+
+            return (comment.fromNow = fromNow);
+          });
         });
     },
     addLike() {
@@ -125,20 +134,20 @@ export default {
         .then(doc => {
           this.like--;
         });
-     
     },
     addCmt() {
       if (this.another) {
         if (this.comments === undefined) {
           this.comments = [];
         }
-   let dateObj = new Date();
-      let newDate = dateObj.toLocaleString();
+        let dateObj = new Date();
+        let newDate = dateObj.toLocaleString();
         this.comments.push({
           comment: this.another,
+          
           userId: this.getUserDocId,
-          userName:this.getUserInfo.userName,
-          date:newDate
+          userName: this.getUserInfo.userName,
+          date: newDate
         });
         this.another = null;
 
@@ -146,11 +155,12 @@ export default {
           .doc(this.id)
           .set(
             {
+              commentLength:this.commentLength+1,
               comments: this.comments
             },
             { merge: true }
           );
-            
+
         this.feedback = null;
       } else {
         this.feedback = "Please Input a comment";
@@ -164,12 +174,12 @@ export default {
 </script>
 
 <style scoped>
-.date{
-    font-size: 12px;
-    margin-top:5px;
+.date {
+  font-size: 12px;
+  margin-top: 5px;
 }
 .post-like {
-    margin-left: 20px;
+  margin-left: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -315,10 +325,10 @@ button:hover {
     max-height: 300px;
   }
   .biggest-container {
-      min-width: 360px;
+    min-width: 360px;
   }
-  .cmt{
-      width: 100px;
+  .cmt {
+    width: 100px;
   }
 }
 @media only screen and (max-width: 1250px) {
@@ -326,6 +336,5 @@ button:hover {
     max-width: 500px;
     max-height: 300px;
   }
-  
 }
 </style>

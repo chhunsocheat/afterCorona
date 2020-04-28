@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavPost/>
     <CreatePostComponent />
     <div class="biggest-container">
       <div class="loader-container">
@@ -10,32 +11,39 @@
       </div>
 
       <div class="each-post" v-for="imagePost in getImagePosts" :key="imagePost.name">
-          <router-link class="router-link" :to="{name:'imagepost',params:{imagePostId:imagePost.id}}">
-          <div>
-        <div class="inner-post">
-          <div class="vote">
-            <i @click="addLike(imagePost.id)" class="fas fa-arrow-up"></i>
-            <p>{{imagePost.like}}</p>
-            <i @click="addDislike(imagePost.id)" class="fas fa-arrow-down"></i>
-          </div>
-          <div class="profile-post">
-            <div class="profile">
-              <img @click="viewProfile(imagePost.userIdInfo)" :src="imagePost.imgUrl" alt />
-              <div class="user-info">
-                <p>posted by {{imagePost.userName}}</p>
+        <router-link class="router-link" :to="{name:'imagepost',params:{imagePostId:imagePost.id}}">
+          <div class="wrapper-post">
+            <div class="inner-post">
+              <div class="vote">
+                <i @click="addLike(imagePost.id)" class="fas fa-arrow-up"></i>
+                <p>{{imagePost.like}}</p>
+                <i @click="addDislike(imagePost.id)" class="fas fa-arrow-down"></i>
+              </div>
+              <div class="profile-post">
+                <div class="profile">
+                  <img @click="viewProfile(imagePost.userIdInfo)" :src="imagePost.imgUrl" alt />
+                  <div class="user-info">
+                    <p id="username">posted by {{imagePost.userName}}</p>
 
-                <p style="font-size:12px;">{{imagePost.date}}</p>
+                    <p style="font-size:12px;">{{imagePost.date}}</p>
+                  </div>
+                </div>
+                <h3>{{imagePost.post}}</h3>
               </div>
             </div>
-            <h3>{{imagePost.post}}</h3>
-          </div>
-        </div>
 
-        <img class="postImage" v-lazy="imagePost.postImage" lazy="loading" alt />
-      
-          
-        </div>
-          </router-link>
+            <img class="postImage" v-lazy="imagePost.postImage" lazy="loading" alt />
+          </div>
+            <div class="cmt-section">
+              <p></p>
+              <i class="fas fa-comment-alt"></i>
+              <p>{{imagePost.commentLength}} Comments</p>
+              <i class="fas fa-star"></i>
+              <p>Give Award</p>
+              <i class="fas fa-share"></i>
+              <p>Share</p>
+            </div>
+        </router-link>
       </div>
     </div>
     <Footer />
@@ -43,6 +51,7 @@
 </template>
 
 <script>
+import NavPost from "../main/NavPost"
 import { mapGetters, mapActions } from "vuex";
 import Footer from "../main/Footer";
 import CreatePostComponent from "../../components/CreatePostComponent";
@@ -51,7 +60,8 @@ import db from "../../firebase/init";
 export default {
   components: {
     Footer,
-    CreatePostComponent
+    CreatePostComponent,
+    NavPost
   },
   data() {
     return {};
@@ -99,6 +109,28 @@ export default {
 </script>
 
 <style scoped>
+.user-info #username:hover{
+  text-decoration: underline;
+
+}
+.cmt-section {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 30px 15px 100px 10px 100px 10px 60px;
+  grid-template-areas: ". . . . . . . ";
+}
+.cmt-section p:hover {
+  text-decoration: underline;
+}
+.cmt-section .fas {
+  margin-right: 5px;
+}
+.profile-post {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+}
 .profile img {
   margin-left: auto;
   margin-right: auto;
@@ -230,6 +262,12 @@ h3 {
 .vote {
   margin-top: 15px;
 }
+.vote .fa-arrow-up:hover{
+color: #3498db;
+}
+.vote .fa-arrow-down:hover{
+color: #e0564d;
+}
 .profile img {
   width: 40px;
   height: 40px;
@@ -238,7 +276,6 @@ h3 {
   margin-right: 10px;
 }
 .postImage {
-
   position: relative;
   margin-left: 25vw;
   margin-right: auto;
@@ -256,19 +293,19 @@ h3 {
     max-height: 300px;
   }
   .biggest-container {
-      min-width: 360px;
+    min-width: 360px;
   }
-  .cmt{
-      width: 100px;
+  .cmt {
+    width: 100px;
   }
-  .each-post{
+  .each-post {
     min-width: 340px;
   }
-  textarea{
+  textarea {
     padding: 0;
     margin: 0;
   }
-  .postImage{
+  .postImage {
     margin-left: 6vw;
     transform: translateX(0);
   }
@@ -278,6 +315,5 @@ h3 {
     max-width: 500px;
     max-height: 300px;
   }
-  
 }
 </style>

@@ -104,6 +104,7 @@ const auth ={
                     console.log(doc.data());
                     
                     const postObj={
+                        commentLength:doc.data().commentLength,
                         id:doc.id,
                         post:doc.data().post,
                         comments:doc.data().comments,

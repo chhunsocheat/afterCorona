@@ -1,10 +1,9 @@
 <template>
   <div>
-    <router-link :to="{name:'mainimage'}">
-      <button>Post image</button>
-    </router-link>
-   <CreatePostComponent/>
-<h1 class="title">Top Posts</h1>
+    <NavPost/>
+    <WorldInfo/>
+    <CreatePostComponent />
+    <h1 class="title">Top Posts</h1>
     <AllPosts />
     <Footer class="footer" />
   </div>
@@ -12,11 +11,13 @@
 
 <script>
 //components
+import NavPost from "../../components/main/NavPost"
 import Nav from "./Nav";
 import Footer from "./Footer";
-import CreatePostComponent from "../../components/CreatePostComponent"
+import CreatePostComponent from "../../components/CreatePostComponent";
 import AllPosts from "../posts/AllPosts";
 import Profile from "../profile1/Profile";
+import WorldInfo from "./Covid/WorldInfo"
 //database and store
 import db from "@/firebase/init";
 import firebase from "firebase";
@@ -26,11 +27,14 @@ export default {
     AllPosts,
     Profile,
     Nav,
+    NavPost,
     Footer,
-    CreatePostComponent
+    CreatePostComponent,
+    WorldInfo
   },
   data() {
     return {
+      activeTab:2,
       id: this.$route.params.userId
     };
   },
@@ -57,7 +61,9 @@ export default {
 </script>
 
 <style scoped>
-.title{
+
+
+.title {
   margin: 20px 0px;
   font-size: 40px;
 }
