@@ -1,5 +1,8 @@
 <template>
   <div>
+    <SideBar/>
+
+    <div class="top-nav"></div>
     <div class="biggest-container">
       <div class="profile">
         <img :src="imgUrl" alt />
@@ -44,11 +47,11 @@
       </div>
       <!-- <button @click="checkDate">click for date</button> -->
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
+import SideBar from "../main/SideBar"
 import { mapActions, mapGetters } from "vuex";
 import Footer from "../../components/main/Footer";
 import moment from "moment";
@@ -57,7 +60,8 @@ import firebase from "firebase";
 
 export default {
   components: {
-    Footer
+    Footer,
+    SideBar
   },
   data() {
     return {
@@ -174,6 +178,9 @@ export default {
 </script>
 
 <style scoped>
+.top-nav{
+  margin-top: 80px;
+}
 .date {
   font-size: 12px;
   margin-top: 5px;

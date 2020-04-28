@@ -1,4 +1,6 @@
 <template>
+<div>
+  <div class="top-nav"></div>
   <div class="biggest-container">
 
     <h1>Your posts</h1>
@@ -36,7 +38,7 @@
     </div>
     
   </div>
-  
+  </div>
 </template>
 
 <script>
@@ -151,6 +153,9 @@ export default {
 </script>
 
 <style scoped>
+.top-nav{
+  margin-top: 100px;
+}
 .post{
   margin:15px;
 }
@@ -183,7 +188,7 @@ img{
   align-items: center;
   margin-bottom: 200px;
   box-shadow: 5px 5px 10px #797979;
-  width: 70vw;
+  width: 50vw;
   border-radius: 5%;
 }
 input {
@@ -304,6 +309,11 @@ button:hover {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   font-weight: 700;
+}
+}
+@media only screen and (min-width: 1300px){
+.container{
+  width: 50vw;
 }
 }
 </style>

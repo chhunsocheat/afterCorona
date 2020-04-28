@@ -1,5 +1,6 @@
 <template>
   <div class="biggest-container">
+    <h1 class="title">Top Posts</h1>
     <div class="loader-container">
       <div v-if="getLoadingStatus">
         <div class="loader"></div>
@@ -177,11 +178,11 @@ li {
   justify-content: center;
 
   margin-top: 20px;
-  text-align: center;
   height: 80px;
   width: 300px;
   overflow: scroll;
   padding: 0;
+  white-space: normal;
   font-size: 16px;
   font-weight: 600;
 }
@@ -220,15 +221,15 @@ button:hover {
   background-color: #39ace7;
 }
 
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 1250px) {
   .cmt {
     width: 150px;
     font-size: 16px;
   }
   .each-post img {
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
 
     border: #3498db 3px solid;
   }
@@ -261,7 +262,7 @@ button:hover {
   .btn-container button,
   .each-cmt button {
     margin: 0px;
-    padding: 10px 20px;
+    padding: 15px 25px;
   }
   span {
     font-size: 14px;

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <NavPost/>
+   <SideBar class="side-bar"/>
+   <div class="top-nav">a</div>
     <CreatePostComponent />
     <div class="biggest-container">
       <div class="loader-container">
@@ -46,11 +47,12 @@
         </router-link>
       </div>
     </div>
-    <Footer />
+    
   </div>
 </template>
 
 <script>
+import SideBar from '../main/SideBar'
 import NavPost from "../main/NavPost"
 import { mapGetters, mapActions } from "vuex";
 import Footer from "../main/Footer";
@@ -61,7 +63,8 @@ export default {
   components: {
     Footer,
     CreatePostComponent,
-    NavPost
+    NavPost,
+    SideBar
   },
   data() {
     return {};
@@ -109,211 +112,11 @@ export default {
 </script>
 
 <style scoped>
-.user-info #username:hover{
-  text-decoration: underline;
-
+@import "./postcss/AllPostImage.css";
+.side-bar{
+  margin-top: 80px;
 }
-.cmt-section {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: 30px 15px 100px 10px 100px 10px 60px;
-  grid-template-areas: ". . . . . . . ";
-}
-.cmt-section p:hover {
-  text-decoration: underline;
-}
-.cmt-section .fas {
-  margin-right: 5px;
-}
-.profile-post {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: flex-start;
-}
-.profile img {
-  margin-left: auto;
-  margin-right: auto;
-}
-.router-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: inherit;
-  display: block;
-  text-decoration: none;
-}
-.router-link:hover {
-  text-decoration: none;
-  cursor: pointer;
-}
-button {
-  background-color: #56baed;
-  border: none;
-  color: white;
-  padding: 15px 80px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 10px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  margin-top: 20px;
-}
-button:hover {
-  cursor: pointer;
-}
-.loader-container {
-  display: flex;
-  justify-content: center;
-}
-.loader {
-  display: flex;
-  justify-content: center;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 60px;
-  height: 60px;
-  animation: spin 0.5s linear infinite; /* Safari */
-  animation: spin 0.5s linear infinite;
-  margin-top: 200px;
-}
-img[lazy="loading"] {
-  margin: auto;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 60px;
-  height: 60px;
-  animation: spin 0.2s linear infinite; /* Safari */
-  animation: spin 0.2s linear infinite;
-  padding: 10px;
-  margin: 50px;
-}
-.inner-loading {
-  position: relative;
-  height: 100vh;
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.biggest-container {
-  width: 80%;
-
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.profile {
-  margin: 20px 10px 10px 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-h3 {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-  padding-left: 30px;
-}
-.inner-post {
-  display: flex;
-  justify-content: flex-start;
-}
-.inner-routerlink {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-}
-.each-post {
-  box-shadow: 5px 5px 10px #79797957;
-  width: 80%;
-  max-width: 60%;
-  border-radius: 5px;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  min-width: 40%;
-  border: 1px solid transparent;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-.each-post:hover {
-  border: #3498db 1px solid;
-}
-.vote {
-  margin-top: 15px;
-}
-.vote .fa-arrow-up:hover{
-color: #3498db;
-}
-.vote .fa-arrow-down:hover{
-color: #e0564d;
-}
-.profile img {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #3498db;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-.postImage {
-  position: relative;
-  margin-left: 25vw;
-  margin-right: auto;
-  transform: translateX(-50%);
-  max-width: 700px;
-  max-height: 500px;
-}
-.fas {
-  font-weight: 800;
-  font-size: 16px;
-}
-@media only screen and (max-width: 1050px) {
-  .postImage {
-    width: 300px;
-    max-height: 300px;
-  }
-  .biggest-container {
-    min-width: 360px;
-  }
-  .cmt {
-    width: 100px;
-  }
-  .each-post {
-    min-width: 340px;
-  }
-  textarea {
-    padding: 0;
-    margin: 0;
-  }
-  .postImage {
-    margin-left: 6vw;
-    transform: translateX(0);
-  }
-}
-@media only screen and (max-width: 1450px) {
-  .postImage {
-    max-width: 500px;
-    max-height: 300px;
-  }
+.top-nav{
+  height: 100px;
 }
 </style>

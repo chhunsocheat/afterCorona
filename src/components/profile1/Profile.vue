@@ -1,4 +1,6 @@
 <template>
+<div>
+    <div class="nav-top"></div>
   <div class="container">
     <div class="profile-container">
       <div class="profile">
@@ -43,6 +45,7 @@
 
       <button class="btn-signout" @click="signOut">Sign Out</button>
     </div>
+  </div>
   </div>
 </template>
 
@@ -148,6 +151,9 @@ export default {
 </script>
 
 <style scoped>
+.nav-top{
+  margin-top: 80px;
+}
 .fa-plus {
   font-size: 20px;
   padding: 0;

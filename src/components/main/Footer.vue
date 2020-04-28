@@ -24,6 +24,14 @@ export default {};
 </script>
 
 <style scoped>
+.container{
+  
+}
+.footer{
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+}
 .copyright{
   top: 10%;
   position: relative;
@@ -54,7 +62,7 @@ footer {
   bottom: 0;
   width: 100%;
   height: 10vh;
-  background: var(--main-btn-color);
+  background: #aee3fd;
 }
 footer i{
   margin: 0px 10px;
