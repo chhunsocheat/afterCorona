@@ -1,72 +1,62 @@
 <template>
-  <div class="hello">  
-      <div class="wrapper fadeInDown">
-  <div id="formContent">
-
-    <h2 class="active"> Sign In </h2>
-    <router-link :to="{name:'signup'}">
+  <div class="hello">
+    <div style="margin-top:200px;"></div>
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <h2 class="active">Sign In</h2>
+        <router-link :to="{name:'signup'}">
           <h2 class="inactive underlineHover">Sign Up</h2>
         </router-link>
-    <form>
-       <input placeholder="Email" type="text" name="email" id="" v-model="email">
-           
-           <input placeholder="Password" type="password" name="password" id="" v-model="password">
-             <p v-if="getErrorMessage">{{getErrorMessage}}</p>
-     <button  @click.prevent="submitForm({email,password})" class="fadeIn fourth">Sign In</button>
-    </form>
-    <div id="formFooter">
-      <router-link class="underlineHover" :to="{name:'signup'}">I dont have an account</router-link>
-| <a class="underlineHover" href="#">Forgot Password?</a>
+        <form>
+          <input placeholder="Email" type="text" name="email" id v-model="email" />
+
+          <input placeholder="Password" type="password" name="password" id v-model="password" />
+          <p v-if="getErrorMessage">{{getErrorMessage}}</p>
+          <button @click.prevent="submitForm({email,password})" class="fadeIn fourth">Sign In</button>
+        </form>
+        <div id="formFooter">
+          <router-link class="underlineHover" :to="{name:'signup'}">I dont have an account</router-link>|
+          <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+      </div>
     </div>
-
   </div>
-</div>
-  </div>
-
-  
 </template>
 
 <script>
-import db from "@/firebase/init"
-import firebase from "firebase"
-import {mapGetters,mapActions} from 'vuex'
+import db from "@/firebase/init";
+import firebase from "firebase";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: 'SignIn',
-  data () {
+  name: "SignIn",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      foods:[],
-      email:"",
-      password:"",
-      feedback:null,
-    }
+      msg: "Welcome to Your Vue.js App",
+      foods: [],
+      email: "",
+      password: "",
+      feedback: null
+    };
   },
-  computed:{
-    ...mapGetters('auth',[
-      'getErrorMessage'
-    ])
+  computed: {
+    ...mapGetters("auth", ["getErrorMessage"])
   },
-  methods:{
-    ...mapActions('auth',[
-      'submitForm'
-    ])
+  methods: {
+    ...mapActions("auth", ["submitForm"])
   },
-  mounted(){
-    db.collection("Foods").get()
-    .then(res=>{
-      res.forEach(element => {
-        let food=element.data();
-        food.id=element.id;
-        this.foods.push(food)
-        
-        
+  mounted() {
+    db.collection("Foods")
+      .get()
+      .then(res => {
+        res.forEach(element => {
+          let food = element.data();
+          food.id = element.id;
+          this.foods.push(food);
+        });
       });
-      
-    })
-    
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

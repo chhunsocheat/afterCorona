@@ -49,7 +49,7 @@ export default {
   methods: {
     submitPostLocal() {
       if (this.post) {
-        console.log(this.image);
+        //console.log(this.image);
 
         this.uploadProfilePic();
         this.feedback = null;

@@ -56,7 +56,7 @@ export default {
     submitPost() {
       let dateObj = new Date();
       let newDate = dateObj.toLocaleString();
-      console.log("create post", this.getUserInfo.imgUrl);
+      //console.log("create post", this.getUserInfo.imgUrl);
 
       db.collection("Posts")
         .add({

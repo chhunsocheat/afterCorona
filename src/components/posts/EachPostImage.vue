@@ -1,7 +1,7 @@
 <template>
   <div>
     <SideBar/>
-
+  <div style="margin-top:100px;"></div>
     <div class="top-nav"></div>
     <div class="biggest-container">
       <div class="profile">
@@ -47,6 +47,8 @@
       </div>
       <!-- <button @click="checkDate">click for date</button> -->
     </div>
+  <div style="margin-bottom:100px;"></div>
+
   </div>
 </template>
 
@@ -87,7 +89,7 @@ export default {
   methods: {
     checkDate() {
       let fromNow = moment(this.date).fromNow();
-      console.log(fromNow);
+      //console.log(fromNow);
     },
     getPost() {
       db.collection("PostsImage")
@@ -108,7 +110,7 @@ export default {
           this.comments.map(comment => {
             //converting every date to reletive date
             let fromNow = moment(comment.date).fromNow();
-            console.log("from now", fromNow);
+            //console.log("from now", fromNow);
 
             return (comment.fromNow = fromNow);
           });

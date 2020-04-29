@@ -27,7 +27,7 @@ export default {};
 .container{
   
 }
-.footer{
+footer{
   position: fixed;
   bottom: 0;
   z-index: 2;

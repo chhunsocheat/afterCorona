@@ -143,7 +143,7 @@ li {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  grid-template-areas: ". .  ";
+  grid-template-areas: ". . ";
   grid-gap: 20px;
 }
 .each-post img {
@@ -221,7 +221,7 @@ button:hover {
   background-color: #39ace7;
 }
 
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1550px) {
   .cmt {
     width: 150px;
     font-size: 16px;

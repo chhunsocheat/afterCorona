@@ -47,7 +47,7 @@
         </router-link>
       </div>
     </div>
-    
+     <div style="margin-bottom:100px;"></div>
   </div>
 </template>
 
@@ -75,7 +75,7 @@ export default {
   methods: {
     ...mapActions("auth", ["loadImagePosts"]),
     viewProfile(username) {
-      console.log("name", username);
+      //console.log("name", username);
     },
     addLike(id) {
       const increment = firebase.firestore.FieldValue.increment(1);
@@ -104,7 +104,7 @@ export default {
     }
   },
   created() {
-    console.log(this.getImagePosts);
+    //console.log(this.getImagePosts);
 
     this.loadImagePosts();
   }

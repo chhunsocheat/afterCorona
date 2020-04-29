@@ -14,7 +14,8 @@ const auth ={
         isLoading:true,
         userInfo:null,
         test:"hi",
-        isUserSignIn:false
+        isUserSignIn:false,
+        activeClass:1,
     },
     getters:{
         getImagePosts(state){
@@ -24,11 +25,11 @@ const auth ={
             return state.isUserSignIn;
         },
         getUserInfo:(state)=>{
-            console.log("user URL getter",state.userInfo);
+            //console.log("user URL getter",state.userInfo);
             return state.userInfo
         },
         userId:(state)=>{
-            console.log("inside getter",state.userId);
+            //console.log("inside getter",state.userId);
             
             return state.userId;
         },
@@ -47,6 +48,9 @@ const auth ={
          allPosts: state => {
             return state.posts;
         },
+        getActiveClass:state=>{
+            return state.activeClass;
+        }
     },
     mutations:{
         loadPosts: (state, allPosts) => {            
@@ -63,7 +67,7 @@ const auth ={
         },
         signUp(state,userId){
             state.userId=userId;
-            console.log("getter",userId);
+            //console.log("getter",userId);
             
         },
         signInError(state,errorMessage){
@@ -89,10 +93,13 @@ const auth ={
         loadImagePosts(state,allImagePosts){
             state.imagePosts=allImagePosts;
         },
+        changeActiveClass(state,activeClass){
+            state.activeClass=activeClass
+        }
     },
     actions:{
         loadImagePosts: (context) => {
-            console.log("hi");
+            //console.log("hi");
             
             context.commit('checkLoading',true)
             const allImagePosts=[]
@@ -101,7 +108,7 @@ const auth ={
             .get()
             .then(allDoc=>{
                 allDoc.forEach(doc=>{
-                    console.log(doc.data());
+                    //console.log(doc.data());
                     
                     const postObj={
                         commentLength:doc.data().commentLength,
@@ -125,7 +132,7 @@ const auth ={
                 context.commit('loadImagePosts', allImagePosts);
         },
         loadPosts: (context) => {
-            console.log("load post");
+            //console.log("load post");
             
             context.commit('checkLoading',true)
             const allPosts=[]
@@ -134,7 +141,7 @@ const auth ={
             .get()
             .then(allDoc=>{
                 allDoc.forEach(doc=>{
-                    console.log(doc.data());
+                    //console.log(doc.data());
                     
                     const postObj={
                         id:doc.id,
@@ -175,7 +182,7 @@ const auth ={
                       userProfileUrl=profile.imgUrl;
                 })
                 router.push({name:'main'})
-                console.log("profile URL",userProfileUrl);
+                //console.log("profile URL",userProfileUrl);
                 context.commit('changeUserState', true);
                 context.commit('submitForm', userId);
                 context.commit('UserDocId',userDocId)
@@ -186,7 +193,7 @@ const auth ={
         
             })
             .catch(err=>{
-              console.log(err);
+              onsole.log(err);
               let feedback="No user found"
               context.commit('signInError', feedback);
             })
@@ -248,6 +255,9 @@ const auth ={
             console.log("userId before commit",userId);
             
             
+        },
+        changeActiveClass(context,payload){
+            context.commit('changeActiveClass',payload)
         }
     }
 }

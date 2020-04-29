@@ -1,6 +1,6 @@
 <template>
   <ul class="container">
-    <li @click="activeTab=1" :class="{active:activeTab===1}">
+    <li class="first" @click="changeActiveClass(1)" :class="{active:getActiveClass===1}">
       <router-link class="router-link" :to="{name:'main'}">
         <div class="inner-link">
           <i class="fas fa-home"></i>
@@ -8,7 +8,7 @@
         </div>
       </router-link>
     </li>
-    <li @click="activeTab=2" :class="{active:activeTab===2}">
+    <li @click="changeActiveClass(2)" :class="{active:getActiveClass===2}">
       <router-link class="router-link" :to="{name:'main'}">
         <div class="inner-link">
           <i class="fas fa-poll-h"></i>
@@ -16,10 +16,24 @@
         </div>
       </router-link>
     </li>
-    <li @click="activeTab=3" :class="{active:activeTab===3}">
+    <li @click="changeActiveClass(3)" :class="{active:getActiveClass===3}">
       <router-link class="router-link" :to="{name:'mainimage'}">
         <div class="inner-link">
           <i class="fas fa-images"></i>Image
+        </div>
+      </router-link>
+    </li>
+    <li >
+      <router-link class="router-link" :to="{name:'profile'}">
+        <div class="inner-link">
+          <i class="fas fa-user"></i>Profile
+        </div>
+      </router-link>
+    </li>
+    <li >
+      <router-link class="router-link" :to="{name:'profile'}">
+        <div class="inner-link">
+          <i class="fas fa-users"></i>Users
         </div>
       </router-link>
     </li>
@@ -27,16 +41,34 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex'
+
 export default {
   data() {
     return {
-      activeTab: 2
+      activeTab: 1
     };
+  },
+  computed:{
+    ...mapGetters('auth',[
+      'getActiveClass'
+    ])
+  },
+  methods:{
+    click(){
+      console.log(this.activeTab);
+    },
+      ...mapActions("auth",[
+        'changeActiveClass'
+      ])
   }
 };
 </script>
 
 <style scoped>
+.fas{
+  margin-right: 5px;
+}
 .router-link {
   color: black;
   text-decoration: none;
@@ -48,7 +80,9 @@ export default {
 .active {
   background: #aee3fd;
 }
-
+.first{
+    margin-top: 80px;
+}
 ul li:hover {
   background: #aee3fd;
   transition: 0.5s ease all;
@@ -81,7 +115,7 @@ ul {
     display: none;
   }
   .side-bar{
-    margin-left: 7vw;
+    margin-left: 4vw;
   }
 }
 </style>

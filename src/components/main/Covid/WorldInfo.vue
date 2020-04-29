@@ -13,7 +13,7 @@ data(){
 methods:{
     async loadData(){
         const data = await axios.get("https://api.covid19api.com/summary")
-        console.log(data.data.Global.TotalConfirmed);
+        //console.log(data.data.Global.TotalConfirmed);
         const allCase=data.data.Global.TotalConfirmed;
         this.data=allCase;
         

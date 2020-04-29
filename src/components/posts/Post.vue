@@ -1,43 +1,42 @@
 <template>
-<div>
-  <div class="top-nav"></div>
-  <div class="biggest-container">
-
-    <h1>Your posts</h1>
-    <div class="container">
-      <img :src="imgUrl" alt="">
-      <!-- <p>{{id}}</p> -->
-      <div class="loader-container">
-        <div class="loader" v-if="loading"></div>
-      </div>
-      <h2 class="post">{{post}}</h2>
-      <div class="vote-container">
-        <button class="btn-vote" @click="addLike">Up Vote</button>
-      <h4 class="number-of-likes" v-if="!loading">Number of Likes: {{like}}</h4>
-        <button class="btn-downvote" @click="addDislike">Down Vote</button>
-      </div>
-      <h3>Comments:</h3>
-      <ul class="cmt-container">
-        <div class="cmt-container">
-          <li class="cmt" v-for="(cmt,i) in comments" :key="i">
-            <p class="date">{{cmt.userName}}</p>
-            <h4>{{cmt.comment}}</h4>
-            <p v-if="!cmt.fromNow" class="date">a few seconds ago</p>
-            <p>{{cmt.fromNow}}</p>
-          </li>
+  <div>
+    <div class="top-nav"></div>
+    <div class="biggest-container">
+      <h1>Your posts</h1>
+      <div class="container">
+        <img :src="imgUrl" alt />
+        <!-- <p>{{id}}</p> -->
+        <div class="loader-container">
+          <div class="loader" v-if="loading"></div>
         </div>
-      </ul>
-      <h3>Add new Comment Here</h3>
-      <h2 v-if="feedback">{{feedback}}</h2>
-      <div class="textarea-container">
-        <textarea v-model="another" name id cols="30" rows="10" />
-      </div>
-      <div class="btn-container">
-        <button @click="addCmt">Comment</button>
+        <h2 class="post">{{post}}</h2>
+        <div class="vote-container">
+          <button class="btn-vote" @click="addLike">Up Vote</button>
+          <h4 class="number-of-likes" v-if="!loading">Number of Likes: {{like}}</h4>
+          <button class="btn-downvote" @click="addDislike">Down Vote</button>
+        </div>
+        <h3>Comments:</h3>
+        <ul class="cmt-container">
+          <div class="cmt-container">
+            <li class="cmt" v-for="(cmt,i) in comments" :key="i">
+              <p class="date">{{cmt.userName}}</p>
+              <h4>{{cmt.comment}}</h4>
+              <p v-if="!cmt.fromNow" class="date">a few seconds ago</p>
+              <p>{{cmt.fromNow}}</p>
+            </li>
+          </div>
+        </ul>
+        <h3>Add new Comment Here</h3>
+        <h2 v-if="feedback">{{feedback}}</h2>
+        <div class="textarea-container">
+          <textarea v-model="another" name id cols="30" rows="10" />
+        </div>
+        <div class="btn-container">
+          <button @click="addCmt">Comment</button>
+        </div>
       </div>
     </div>
-    
-  </div>
+     <div style="margin-bottom:100px;"></div>
   </div>
 </template>
 
@@ -45,7 +44,7 @@
 import db from "../../firebase/init";
 import firebase from "firebase";
 import { mapGetters, mapActions } from "vuex";
-import moment from "moment"
+import moment from "moment";
 export default {
   data() {
     return {
@@ -65,17 +64,18 @@ export default {
         .get()
         .then(res => {
           let post = res.data();
-          this.imgUrl=post.imgUrl;
+          this.imgUrl = post.imgUrl;
           this.post = post.post;
           this.loading = false;
           this.like = post.like;
           this.comments = post.comments;
-          this.comments.map(comment=>{//converting every date to reletive date 
-            let fromNow=moment(comment.date).fromNow();
-            console.log("from now",fromNow);
-            
-            return comment.fromNow=fromNow;
-          })
+          this.comments.map(comment => {
+            //converting every date to reletive date
+            let fromNow = moment(comment.date).fromNow();
+            console.log("from now", fromNow);
+
+            return (comment.fromNow = fromNow);
+          });
         });
     },
     addLike() {
@@ -102,20 +102,19 @@ export default {
         .then(doc => {
           this.like--;
         });
-     
     },
     addCmt() {
       if (this.another) {
         if (this.comments === undefined) {
           this.comments = [];
         }
-   let dateObj = new Date();
-      let newDate = dateObj.toLocaleString();
+        let dateObj = new Date();
+        let newDate = dateObj.toLocaleString();
         this.comments.push({
           comment: this.another,
           userId: this.getUserDocId,
-          userName:this.getUserInfo.userName,
-          date:newDate
+          userName: this.getUserInfo.userName,
+          date: newDate
         });
         this.another = null;
 
@@ -127,7 +126,7 @@ export default {
             },
             { merge: true }
           );
-          
+
         this.feedback = null;
       } else {
         this.feedback = "Please Input a comment";
@@ -138,9 +137,9 @@ export default {
     this.getPost();
   },
   computed: {
-    ...mapGetters('auth',["userId", "getUserDocId","getUserInfo"]),
-    generateImg(){
-      return `https://robohash.org/${this.getUserDocId}`
+    ...mapGetters("auth", ["userId", "getUserDocId", "getUserInfo"]),
+    generateImg() {
+      return `https://robohash.org/${this.getUserDocId}`;
     },
     getDate() {
       let dateObj = new Date();
@@ -153,29 +152,29 @@ export default {
 </script>
 
 <style scoped>
-.top-nav{
+.top-nav {
   margin-top: 100px;
 }
-.post{
-  margin:15px;
+.post {
+  margin: 15px;
 }
-.btn-downvote{
+.btn-downvote {
   background-color: rgb(255, 94, 94);
 }
-.btn-downvote:hover{
+.btn-downvote:hover {
   background-color: rgb(255, 53, 53);
 }
-img{
+img {
   margin-top: 20px;
   border-radius: 50%;
   width: 200px;
   height: 200px;
   border: #3498db solid 3px;
 }
-.date{
+.date {
   font-size: 12px;
 }
-.biggest-container{
+.biggest-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -275,45 +274,45 @@ button:hover {
   cursor: pointer;
   background-color: #39ace7;
 }
-.btn-upvote{
+.btn-upvote {
   margin-bottom: 10px;
 }
-@media only screen and (max-width: 900px){
-  .btn-upvote{
-  margin-bottom: 0px;
-}
-  .post{
+@media only screen and (max-width: 900px) {
+  .btn-upvote {
+    margin-bottom: 0px;
+  }
+  .post {
     font-size: 18px;
   }
-  .container{
+  .container {
     padding: 20px;
   }
   button {
-  background-color: #56baed;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 20px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  font-weight: 700;
+    background-color: #56baed;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 13px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px 20px 20px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    font-weight: 700;
+  }
 }
-}
-@media only screen and (min-width: 1300px){
-.container{
-  width: 50vw;
-}
+@media only screen and (min-width: 1300px) {
+  .container {
+    width: 50vw;
+  }
 }
 </style>

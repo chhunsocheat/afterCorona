@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    
     <div class="top-nav">a</div>
     <SideBar class="side-bar"/>
     <div class="main">
@@ -28,6 +29,7 @@ import firebase from "firebase";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
+    
     AllPosts,
     Profile,
     Nav,
@@ -53,13 +55,13 @@ export default {
     }
   },
   created() {
-    console.log(this.userInfo);
+    //console.log(this.userInfo);
   },
   updated() {
     // this.onLoadProfile()
   },
   mounted() {
-    console.log(firebase.auth().currentUser);
+    //console.log(firebase.auth().currentUser);
     // this.loadCmt();
   }
 };
@@ -67,6 +69,7 @@ export default {
 
 <style scoped>
 @import './maincss/main.css';
+
 .top-nav{
   height: 90px;
 }
