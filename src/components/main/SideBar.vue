@@ -1,7 +1,7 @@
 <template>
   <ul class="container">
     <li class="first" @click="changeActiveClass(1)" :class="{active:getActiveClass===1}">
-      <router-link class="router-link" :to="{name:'main'}">
+      <router-link class="router-link" :to="{name:'WorldInfo'}">
         <div class="inner-link">
           <i class="fas fa-home"></i>
           Main
@@ -101,7 +101,7 @@ ul {
   border-right: 1px solid #aee3fd;
   height: 100vh;
 }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 639px) {
   
   
   .side-bar{

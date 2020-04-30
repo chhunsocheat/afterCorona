@@ -8,7 +8,7 @@ import Profile from '../components/profile1/Profile'
 import CreatePost from '../components/posts/CreatePost'
 import PostImage from "../components/posts/AllPostImage"
 import EachPostImage from "../components/posts/EachPostImage"
-
+import WorldInfo from "../components/main/Covid/WorldInfo"
 
 
 import firebase from 'firebase'
@@ -18,6 +18,12 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'maincovid',
+      component: WorldInfo
+      
+    },
+    {
+      path: '/signin',
       name: 'signin',
       component: SignIn
       

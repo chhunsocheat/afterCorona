@@ -1,35 +1,36 @@
 <template>
   <div id="app">
-<Nav/>
-    <router-view/>
-    <Footer  />
+    <Nav />
+    <router-view />
+    <Footer />
   </div>
 </template>
 
 <script>
-import Nav from './components/main/Nav'
-import Footer from './components/main/Footer'
-import NavPost from './components/main/NavPost'
+import Nav from "./components/main/Nav";
+import Footer from "./components/main/Footer";
+import NavPost from "./components/main/NavPost";
+
 export default {
-  name: 'App',
-  components:{
+  name: "App",
+  components: {
     Nav,
     Footer,
     NavPost
   }
-}
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-:root{
-  --main-btn-color:#56baed;
-  --main-btn-color-hover:#39ace7;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+:root {
+  --main-btn-color: #56baed;
+  --main-btn-color-hover: #39ace7;
 }
-.footer{
+.footer {
   margin-top: 50px;
 }
-.logo{
+.logo {
   margin-top: 30px;
 }
 .file-input__input {
@@ -60,12 +61,12 @@ export default {
   margin-right: 4px;
 }
 #app {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background:white ;
-margin: 0px;
+  background: white;
+  margin: 0px;
 }
 </style>

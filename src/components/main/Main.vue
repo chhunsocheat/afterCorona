@@ -5,7 +5,7 @@
     <SideBar class="side-bar"/>
     <div class="main">
    
-    <WorldInfo class="world-info"/>
+    <!-- <WorldInfo class="world-info"/> -->
     <CreatePostComponent class="createpost"/>
     
     <AllPosts class="all-post"/>
@@ -84,7 +84,7 @@ export default {
 footer {
   margin-top: 30px;
 }
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 639) {
   textarea {
   }
   .btn-sm-container {

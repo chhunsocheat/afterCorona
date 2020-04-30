@@ -6,7 +6,13 @@ import router from './router'
 import VueLazyload from 'vue-lazyload'
 import {store} from './store/store'
 import firebase from 'firebase'
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(VueLazyload)
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 
 let app=null;

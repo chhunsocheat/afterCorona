@@ -1,10 +1,10 @@
 <template>
   <div class="big-container">
-    <Slide width="480" disableOutsideClick :closeOnNavigation="true" class="slide">
+    <Slide width="480"  :closeOnNavigation="true" class="slide">
       
       <ul class="container">
         <li class="first" @click="changeActiveClass(1)" :class="{active:getActiveClass===1}">
-          <router-link class="router-link" :to="{name:'main'}">
+          <router-link class="router-link" :to="{name:'maincovid'}">
             <div class="inner-link">
               <i class="fas fa-home"></i>
               Main
@@ -19,7 +19,7 @@
             </div>
           </router-link>
         </li>
-        <li @click="changeActiveClass(3)" :class="{active:getActiveClass===3}">
+        <li @click="changeActiveClass(1)" :class="{active:getActiveClass===3}">
           <router-link class="router-link" :to="{name:'mainimage'}">
             <div class="inner-link">
               <i class="fas fa-images"></i>Image
@@ -47,8 +47,12 @@
         <img :title="getUserInfo.userName" :src="getUserInfo.imgUrl" alt />
       </router-link>
     </div>
-    <div class="logo-container">
-      <router-link :to="{name:'main'}">
+    <div v-else class="profile profile-login">
+      <i class="fas fa-user"></i>
+      <i class="fas fa-caret-down"></i>
+    </div>
+    <div @click="changeActiveClass(1)" class="logo-container">
+      <router-link :to="{name:'maincovid'}">
         <img title="logo" src="../../assets/logo.png" alt />
       </router-link>
     </div>
@@ -97,8 +101,23 @@ export default {
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
+
 </style>
 <style scoped>
+.profile-login{
+  margin: auto;
+  padding: 10px;
+  border: transparent solid 1px;
+  border-radius: 5px;
+}
+.profile-login:hover{
+  cursor: pointer;
+  border: rgba(119, 119, 119, 0.281) solid 1px;
+}
+.profile-login i{
+  font-size: 24px;
+  
+}
 .fas {
   margin-right: 5px;
 }
@@ -174,6 +193,9 @@ nav img {
 }
 .profile {
   grid-area: profile;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .profile img {
   margin-top: 15px;
