@@ -1,7 +1,6 @@
 <template>
   <div class="big-container">
-    <Slide width="480"  :closeOnNavigation="true" class="slide">
-      
+    <Slide width="480" :closeOnNavigation="true" class="slide">
       <ul class="container">
         <li class="first" @click="changeActiveClass(1)" :class="{active:getActiveClass===1}">
           <router-link class="router-link" :to="{name:'maincovid'}">
@@ -48,8 +47,10 @@
       </router-link>
     </div>
     <div v-else class="profile profile-login">
-      <i class="fas fa-user"></i>
-      <i class="fas fa-caret-down"></i>
+      <router-link class="router-link1" :to="{name:'signin'}">
+            <i class="fas fa-sign-in-alt"></i>
+            SignIn
+          </router-link>
     </div>
     <div @click="changeActiveClass(1)" class="logo-container">
       <router-link :to="{name:'maincovid'}">
@@ -59,9 +60,10 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import { Slide } from "vue-burger-menu";
-
+// import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap-vue/dist/bootstrap-vue.css";
 import firebase from "firebase";
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -96,33 +98,44 @@ export default {
   z-index: 1000; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #aee3fd!important; /* Black*/
+  background-color: #aee3fd !important; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
-
 </style>
+
 <style scoped>
-.profile-login{
+.profile-login {
   margin: auto;
   padding: 10px;
   border: transparent solid 1px;
   border-radius: 5px;
 }
-.profile-login:hover{
+.profile-login:hover {
   cursor: pointer;
-  border: rgba(119, 119, 119, 0.281) solid 1px;
+  /* border: rgba(119, 119, 119, 0.281) solid 1px; */
 }
-.profile-login i{
+.profile-login i {
   font-size: 24px;
-  
 }
 .fas {
   margin-right: 5px;
 }
 .router-link {
-  color: black;
+ color: white;
+  text-decoration: none;
+}
+.router-link1 {
+  padding: 10px;
+  color: #56baed;
+  border: transparent solid 1px;
+  text-decoration: none;
+}
+.router-link1:hover {
+  border: #56baed solid 1px;
+
+  color: #56baed;
   text-decoration: none;
 }
 .inner-link {
@@ -213,7 +226,7 @@ nav img {
 }
 @media only screen and (min-width: 640px) {
   .slide {
-    display: none;
+    /* display: none; */
   }
 }
 </style>

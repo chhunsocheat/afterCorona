@@ -2,13 +2,12 @@
   <div>
     <div style="margin-top:100px;"></div>
 
-    
-
     <!-- <span class="flag-icon flag-icon-kh"></span> -->
     <!-- <h1>Covid 19 Global newConfirmed: {{newConfirmed}}</h1> -->
     <!-- <h1>Covid 19 Global newDeaths: {{newDeaths}}</h1> -->
     <!-- <span style="width=20px;height=20px;" class="flag-icon flag-icon-kh"></span> -->
     <!-- <h1>Covid 19 Global newRecovered: {{newRecovered}}</h1> -->
+    
     <div class="info-container">
       <h3>Global Total Confirmed:</h3>
       <h2>
@@ -27,33 +26,29 @@
         <i class="fas fa-shield-virus"></i>
       </h2>
     </div>
-    <h1 style="margin-bottom:20px;">List of Countries: </h1>
-<div ref="country" class="countries">
-      
+    <h1 style="margin-bottom:20px;">List of Countries:</h1>
+    <div class="loader-container">
+      <div v-if="loadingStatus">
+        <div class="loader"></div>
+        <div class="inner-loading"></div>
+      </div>
     </div>
-    <div>
-  <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-    <b-dropdown-item>First Action</b-dropdown-item>
-    <b-dropdown-item>Second Action</b-dropdown-item>
-    <b-dropdown-item>Third Action</b-dropdown-item>
-    <b-dropdown-divider></b-dropdown-divider>
-    <b-dropdown-item active>Active action</b-dropdown-item>
-    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-  </b-dropdown>
-</div>
+    <div ref="country" class="countries">
+     
+    </div>
+    <div></div>
     <div style="margin-bottom:100px;"></div>
   </div>
 </template>
 
 <script>
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 import "flag-icon-css/css/flag-icon.css";
 import { isoCountries, getCountryName } from "./countriesCodes";
 import axios from "axios";
 export default {
   data() {
     return {
+      loadingStatus: true,
       newConfirmed: null,
       newDeaths: null,
       newRecovered: null,
@@ -95,12 +90,17 @@ export default {
     },
     async loadCountries() {
       //console.log(this.getCountryName("Cambodia"));
+try{
 
-      const data = await axios.get("https://api.covid19api.com/summary");
+  const data = await axios.get("https://api.covid19api.com/summary");
 
-      this.allCountries = data.data.Countries.slice(20,40);
-      console.log("All Countries", this.allCountries);
+  this.allCountries = data.data.Countries;
+  console.log("All Countries", this.allCountries);
+  this.loadingStatus=false;
+}catch(err){
 
+
+}
       //setTimeout(loadData, 1000);
     },
     injectCountry() {
@@ -123,7 +123,7 @@ export default {
           </div>
           <div>
             <p>Active Case</p>
-            <h4>${country.TotalConfirmed-country.TotalRecovered}</h4>
+            <h4>${country.TotalConfirmed - country.TotalRecovered}</h4>
           </div>
           <div>
             <p>Confirm Death</p>
@@ -138,21 +138,21 @@ export default {
   created() {
     this.loadData();
   },
-    mounted() {
-      this.loadCountries().then(()=>{
-          this.injectCountry();
-
-      });
-    }
+  mounted() {
+    this.loadCountries().then(() => {
+      this.injectCountry();
+    });
+  }
 };
 </script>
 
 <style >
-.figure div{
-    margin:0px 10px 0px 10px;
+.figure div {
+  margin: 0px 10px 0px 10px;
 }
-.info-container h3,.info-container h2{
- margin-bottom: 10px;
+.info-container h3,
+.info-container h2 {
+  margin-bottom: 10px;
 }
 .countries {
   display: grid;
@@ -160,15 +160,14 @@ export default {
   grid-gap: 15px;
 }
 .each-country {
-    box-shadow: 5px 5px 10px #79797957;
-padding: 20px 50px 20px 50px;
-border-radius: 5px;
+  box-shadow: 5px 5px 10px #79797957;
+  padding: 20px 50px 20px 50px;
+  border-radius: 5px;
   border: transparent solid 1px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
 .each-country:hover {
   border: black 1px solid;
@@ -176,5 +175,40 @@ border-radius: 5px;
 }
 .figure {
   display: flex;
+  flex-direction: column;
+}
+.figure *{
+ margin: 10px;
+ 
+}
+</style>
+<style scoped>
+.loader-container {
+  display: flex;
+  justify-content: center;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 60px;
+  height: 60px;
+  animation: spin 0.5s linear infinite; /* Safari */
+  animation: spin 0.5s linear infinite;
+  margin-top: 200px;
+}
+.inner-loading {
+  position: relative;
+  height: 100vh;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
