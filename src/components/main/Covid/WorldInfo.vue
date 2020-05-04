@@ -7,8 +7,9 @@
     <!-- <h1>Covid 19 Global newDeaths: {{newDeaths}}</h1> -->
     <!-- <span style="width=20px;height=20px;" class="flag-icon flag-icon-kh"></span> -->
     <!-- <h1>Covid 19 Global newRecovered: {{newRecovered}}</h1> -->
-    
+
     <div class="info-container">
+      <div style="height:40px;"></div>
       <h3>Global Total Confirmed:</h3>
       <h2>
         {{totalConfirmed}}
@@ -26,16 +27,14 @@
         <i class="fas fa-shield-virus"></i>
       </h2>
     </div>
-    <h1 style="margin-bottom:20px;">List of Countries:</h1>
+    <h2 style="margin-bottom:20px;">Top 10 Countries:</h2>
     <div class="loader-container">
       <div v-if="loadingStatus">
         <div class="loader"></div>
         <div class="inner-loading"></div>
       </div>
     </div>
-    <div ref="country" class="countries">
-     
-    </div>
+    <div ref="country" class="countries"></div>
     <div></div>
     <div style="margin-bottom:100px;"></div>
   </div>
@@ -90,17 +89,17 @@ export default {
     },
     async loadCountries() {
       //console.log(this.getCountryName("Cambodia"));
-try{
+      try {
+        const data = await axios.get("https://api.covid19api.com/summary");
 
-  const data = await axios.get("https://api.covid19api.com/summary");
-
-  this.allCountries = data.data.Countries;
-  console.log("All Countries", this.allCountries);
-  this.loadingStatus=false;
-}catch(err){
-
-
-}
+        let allCountries = data.data.Countries;
+        let top10Countries=allCountries.sort((a,b)=>{
+          return b.TotalConfirmed-a.TotalConfirmed;
+        }).slice(0,10)
+        this.allCountries=top10Countries;
+        console.log("All Countries", top10Countries);
+        this.loadingStatus = false;
+      } catch (err) {}
       //setTimeout(loadData, 1000);
     },
     injectCountry() {
@@ -177,9 +176,8 @@ try{
   display: flex;
   flex-direction: column;
 }
-.figure *{
- margin: 10px;
- 
+.figure * {
+  margin: 10px;
 }
 </style>
 <style scoped>

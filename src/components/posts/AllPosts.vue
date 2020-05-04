@@ -221,7 +221,7 @@ button:hover {
   background-color: #39ace7;
 }
 
-@media only screen and (max-width: 1550px) {
+@media only screen and (max-width: 1650px) {
   .cmt {
     width: 150px;
     font-size: 16px;

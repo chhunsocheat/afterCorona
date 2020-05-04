@@ -1,6 +1,6 @@
 <template>
   <div class="big-container">
-    <Slide width="480" :closeOnNavigation="true" class="slide">
+    <Slide width="400" :closeOnNavigation="true" class="slide">
       <ul class="container">
         <li class="first" @click="changeActiveClass(1)" :class="{active:getActiveClass===1}">
           <router-link class="router-link" :to="{name:'maincovid'}">
@@ -39,6 +39,14 @@
             </div>
           </router-link>
         </li>
+        <li v-if="getisUserSignIn">
+          <router-link class="router-link" :to="{name:'profile'}">
+            <div class="inner-link sign-out" @click="signOut">
+              <i class="fas fa-sign-out-alt"></i>Sign Out
+            </div>
+          </router-link>
+        </li>
+        <li style="margin-bottom:50px;"></li>
       </ul>
     </Slide>
     <div v-if="getisUserSignIn" class="profile">
@@ -74,6 +82,15 @@ export default {
     return {};
   },
   methods: {
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: "signin" });
+          this.$store.commit("auth/changeUserState", false);
+        });
+    },
     checkIsSignIn() {
       var user = firebase.auth().currentUser;
       if (user) {
@@ -92,7 +109,7 @@ export default {
   background-color: #ffffff;
 }
 .bm-menu {
-  height: 100%; /* 100% Full-height */
+  height: 60%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1000; /* Stay on top */
@@ -103,9 +120,14 @@ export default {
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
+
 </style>
 
 <style scoped>
+.sign-out:hover{
+  transition: 1s ease all;
+  background: rgb(236, 70, 70);
+}
 .profile-login {
   margin: auto;
   padding: 10px;
@@ -166,6 +188,7 @@ ul li {
 }
 
 .big-container {
+  padding: 10px 0px;
   display: grid;
   grid-template-areas: ". logo profile .";
   grid-template-columns: 1fr 3fr 3fr 1fr;
@@ -220,13 +243,11 @@ nav img {
 }
 
 @media only screen and (min-width: 1400px) {
-  .container {
-    width: 50%;
-  }
+  
 }
 @media only screen and (min-width: 640px) {
-  .slide {
-    /* display: none; */
-  }
+ .slide{
+   width: 200px;
+ }
 }
 </style>

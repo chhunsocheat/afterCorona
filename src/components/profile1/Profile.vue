@@ -6,8 +6,7 @@
       <div class="profile">
         <img :src="img" alt />
 
-        <div class="upload" style="
-          width: 20px;">
+        <div class="upload-container">
           <input
             @change="uploadProfile($event)"
             type="file"
@@ -15,14 +14,14 @@
             id="file-input"
             class="file-input__input"
           />
-          <label for="file-input">
+          <label class="upload" for="file-input">
             <i class="fas fa-plus" style="
           cursor: pointer;"></i>
           </label>
         </div>
       </div>
       <p v-if="progress">uploading {{progress}}%...</p>
-      <button class="btn-upload" @click="uploadProfilePic">Upload</button>
+      <!-- <button class="btn-upload" @click="uploadProfilePic">Upload</button> -->
       <h1>Profile</h1>
       <div class="info-container">
         <div>
@@ -77,7 +76,7 @@ export default {
     uploadProfile(event) {
       this.file = event.target.files[0];
       console.log("profile image",this.file);
-      
+      this.uploadProfilePic();
     },
     uploadProfilePic() {
       let img = this.img;
@@ -159,14 +158,24 @@ export default {
   padding: 0;
   margin: 0;
 }
-.upload {
+
+  .upload {
+    cursor: pointer;
+   
+    background: #56baed;
+    border-radius: 50%;
+    
+  padding: 20px;
+  }
+.upload-container {
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   position: relative;
   top: -22%;
   right: -70%;
   background: #56baed;
   border-radius: 50%;
-  padding: 20px;
 }
 .btn-signout {
   background-color: rgb(255, 94, 94);
@@ -319,14 +328,18 @@ h1 {
   .btn-upload {
     padding: 10px 25px;
   }
-  .upload {
-    cursor: pointer;
-    position: relative;
+  .upload-container{
+ position: relative;
     top: -30%;
     right: -65%;
+  }
+  .upload {
+    padding: 10px;
+    cursor: pointer;
+   
     background: #56baed;
     border-radius: 50%;
-    padding: 5px;
+    
   }
   h1 {
     margin-bottom: 10px;

@@ -30,13 +30,13 @@
         </div>
       </router-link>
     </li>
-    <li >
+    <!-- <li >
       <router-link class="router-link" :to="{name:'profile'}">
         <div class="inner-link">
           <i class="fas fa-users"></i>Users
         </div>
       </router-link>
-    </li>
+    </li> -->
   </ul>
 </template>
 

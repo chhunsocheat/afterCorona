@@ -1,7 +1,7 @@
 <template>
   
   <div class="hello">
-     <div style="margin-top:200px;"></div>
+     <div style="margin-top:100px;"></div>
     <div class="wrapper fadeInDown">
       <div id="formContent">
         <router-link :to="{name:'signin'}">
@@ -225,5 +225,8 @@ input[type="text"]:placeholder {
 
 * {
   box-sizing: border-box;
+}
+.hello{
+  height: 82vh;
 }
 </style>

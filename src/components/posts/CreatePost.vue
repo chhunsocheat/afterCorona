@@ -1,4 +1,6 @@
 <template>
+<div>
+  <div style="height:90vh;"></div>
   <div class="biggest-container">
     <div class="tab">
       <div id="b1" :class="{active:activeTab===1}" @click="component='form-status';activeTab=1">
@@ -19,6 +21,7 @@
     <keep-alive>
       <component :is="component"></component>
     </keep-alive>
+  </div>
   </div>
 </template>
 
