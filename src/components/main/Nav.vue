@@ -100,7 +100,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("auth", ["getUserInfo", "getisUserSignIn"])
+    ...mapGetters("auth", ["getActiveClass","getUserInfo", "getisUserSignIn"])
   }
 };
 </script>
@@ -188,7 +188,7 @@ ul li {
 }
 
 .big-container {
-  padding: 10px 0px;
+  padding: 0px 0px;
   display: grid;
   grid-template-areas: ". logo profile .";
   grid-template-columns: 1fr 3fr 3fr 1fr;

@@ -1,7 +1,7 @@
 <template>
   <ul class="container">
     <li class="first" @click="changeActiveClass(1)" :class="{active:getActiveClass===1}">
-      <router-link class="router-link" :to="{name:'WorldInfo'}">
+      <router-link class="router-link" :to="{name:'maincovid'}">
         <div class="inner-link">
           <i class="fas fa-home"></i>
           Main

@@ -2,14 +2,9 @@
   <div>
     <div style="margin-top:100px;"></div>
 
-    <!-- <span class="flag-icon flag-icon-kh"></span> -->
-    <!-- <h1>Covid 19 Global newConfirmed: {{newConfirmed}}</h1> -->
-    <!-- <h1>Covid 19 Global newDeaths: {{newDeaths}}</h1> -->
-    <!-- <span style="width=20px;height=20px;" class="flag-icon flag-icon-kh"></span> -->
-    <!-- <h1>Covid 19 Global newRecovered: {{newRecovered}}</h1> -->
-
     <div class="info-container">
       <div style="height:40px;"></div>
+
       <h3>Global Total Confirmed:</h3>
       <h2>
         {{totalConfirmed}}
@@ -28,14 +23,47 @@
       </h2>
     </div>
     <h2 style="margin-bottom:20px;">Top 10 Countries:</h2>
+
     <div class="loader-container">
       <div v-if="loadingStatus">
         <div class="loader"></div>
         <div class="inner-loading"></div>
       </div>
     </div>
-    <div ref="country" class="countries"></div>
-    <div></div>
+    <div ref="country" class="countries">
+      <div v-for="(country,i) in allCountries" :key="i">
+        <router-link class="router-link" :to="{name:'covidcountry',params:{countryName:country.Country}}">
+          <div class="each-country">
+            <span
+              style="width=20px;height=20px;"
+              :class="['flag-icon flag-icon-'+country.CountryCode.toLowerCase()]"
+            ></span>
+
+            <h3>{{country.Country}}</h3>
+            <div class="figure">
+              <div>
+                <p>Confirm Cases</p>
+                <h4>{{country.TotalConfirmed}}</h4>
+              </div>
+              <div>
+                <p>Total Recovered</p>
+                <h4>{{country.TotalRecovered}}</h4>
+              </div>
+              <div>
+                <p>Active Case</p>
+                <h4>{{country.TotalConfirmed - country.TotalRecovered}}</h4>
+              </div>
+              <div>
+                <p>Confirm Death</p>
+                <h4>{{country.TotalDeaths}}</h4>
+              </div>
+            </div>
+
+            <button>Click me</button>
+          </div>
+        </router-link>
+      </div>
+    </div>
     <div style="margin-bottom:100px;"></div>
   </div>
 </template>
@@ -54,7 +82,8 @@ export default {
       totalConfirmed: null,
       totalDeaths: null,
       totalRecovered: null,
-      allCountries: null
+      allCountries: null,
+      countryCode: "kh"
     };
   },
   methods: {
@@ -70,12 +99,7 @@ export default {
 
       const data = await axios.get("https://api.covid19api.com/summary");
       console.log(data.data);
-      //   const global = Object.entries(data.data.Global);
-      // let globalArray=[]
-      //   for (let [key, value] of global) {
-      //     console.log(`${key}: ${value}`);
-
-      //   }
+      
       this.newConfirmed = data.data.Global.NewConfirmed;
       this.newDeaths = data.data.Global.NewDeaths;
       this.newRecovered = data.data.Global.NewRecovered;
@@ -93,10 +117,12 @@ export default {
         const data = await axios.get("https://api.covid19api.com/summary");
 
         let allCountries = data.data.Countries;
-        let top10Countries=allCountries.sort((a,b)=>{
-          return b.TotalConfirmed-a.TotalConfirmed;
-        }).slice(0,10)
-        this.allCountries=top10Countries;
+        let top10Countries = allCountries
+          .sort((a, b) => {
+            return b.TotalConfirmed - a.TotalConfirmed;
+          })
+          .slice(0, 10);
+        this.allCountries = top10Countries;
         console.log("All Countries", top10Countries);
         this.loadingStatus = false;
       } catch (err) {}
@@ -107,8 +133,9 @@ export default {
       this.allCountries.forEach(country => {
         let countryCode = country.CountryCode;
         //console.log(this.$refs.country);
-        countrySelected.innerHTML += `           
-            <div class="each-country">
+        countrySelected.innerHTML += `    
+
+        <div class="each-country">
          <span style="width=20px;height=20px;" class="flag-icon flag-icon-${countryCode.toLowerCase()}"></span>
         <h3>${country.Country}</h3>
         <div class="figure">
@@ -129,17 +156,24 @@ export default {
              <h4>${country.TotalDeaths}</h4>
           </div>
         </div>
+          <a href="#/country/${country.Country}">
+
+        <button>Click me</button>
+          </a>
+
       </div>
+      
             `;
       });
     }
   },
   created() {
     this.loadData();
+    this.loadCountries();
   },
   mounted() {
     this.loadCountries().then(() => {
-      this.injectCountry();
+      // this.injectCountry();
     });
   }
 };
@@ -181,6 +215,14 @@ export default {
 }
 </style>
 <style scoped>
+.router-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: inherit;
+    display: block;
+    text-decoration: none;
+  }
 .loader-container {
   display: flex;
   justify-content: center;

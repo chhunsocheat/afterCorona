@@ -9,6 +9,7 @@ import CreatePost from '../components/posts/CreatePost'
 import PostImage from "../components/posts/AllPostImage"
 import EachPostImage from "../components/posts/EachPostImage"
 import WorldInfo from "../components/main/Covid/WorldInfo"
+import EachCountry from "../components/main/Covid/Chart/EachCountry"
 
 
 import firebase from 'firebase'
@@ -22,6 +23,7 @@ const router = new Router({
       component: WorldInfo
       
     },
+    
     {
       path: '/signin',
       name: 'signin',
@@ -80,7 +82,13 @@ const router = new Router({
       meta:{
         requireAuth:true
       }
-    }
+    },
+    {
+      path: '/country/:countryName',
+      name: 'covidcountry',
+      component: EachCountry
+      
+    },
   ]
 })
 
