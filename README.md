@@ -4,8 +4,10 @@ This site is built as a side project during my free time in quarentine. It will 
 
 ## Getting Started
 
-Once you clone the project, use npm run dev to start the project.
-
+Once you clone the project, use 
+```
+npm run dev 
+```
 ### Prerequisites
 
 npm install to run the project
