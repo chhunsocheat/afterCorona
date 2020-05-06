@@ -9,9 +9,9 @@ Once you clone the project, use
 npm run dev 
 ```
 ### Prerequisites
-
+```
 npm install to run the project
-
+```
 
 ## Built With
 
