@@ -22,6 +22,40 @@
         <i class="fas fa-shield-virus"></i>
       </h2>
     </div>
+    <h1>Your Country</h1>
+    <CoolSelect v-model="selected" :items="items" />
+    <b>Selected:</b>
+    {{ selected || "not chosen" }}.
+    <br />
+    <br />
+    <router-link v-if="selected">
+      <div class="each-country">
+        <span
+          style="width=20px;height=20px;"
+          :class="['flag-icon flag-icon-kh']"
+        ></span>
+
+        <h3>{{selectCountryObj.newConfirmed}}</h3>
+        <!-- <div class="figure">
+          <div>
+            <p>Confirm Cases</p>
+            <h4>{{country.TotalConfirmed}}</h4>
+          </div>
+          <div>
+            <p>Total Recovered</p>
+            <h4>{{country.TotalRecovered}}</h4>
+          </div>
+          <div>
+            <p>Active Case</p>
+            <h4>{{country.TotalConfirmed - country.TotalRecovered}}</h4>
+          </div>
+          <div>
+            <p>Confirm Death</p>
+            <h4>{{country.TotalDeaths}}</h4>
+          </div>
+        </div> -->
+      </div>
+    </router-link>
     <h2 style="margin-bottom:20px;">Top 10 Countries:</h2>
 
     <div class="loader-container">
@@ -32,7 +66,10 @@
     </div>
     <div ref="country" class="countries">
       <div v-for="(country,i) in allCountries" :key="i">
-        <router-link class="router-link" :to="{name:'covidcountry',params:{countryName:country.Country}}">
+        <router-link
+          class="router-link"
+          :to="{name:'covidcountry',params:{countryName:country.Country}}"
+        >
           <div class="each-country">
             <span
               style="width=20px;height=20px;"
@@ -58,8 +95,6 @@
                 <h4>{{country.TotalDeaths}}</h4>
               </div>
             </div>
-
-            <button>Click me</button>
           </div>
         </router-link>
       </div>
@@ -69,12 +104,19 @@
 </template>
 
 <script>
+import { CoolSelect } from "vue-cool-select";
+
 import "flag-icon-css/css/flag-icon.css";
 import { isoCountries, getCountryName } from "./countriesCodes";
 import axios from "axios";
 export default {
+  components: {
+    CoolSelect
+  },
   data() {
     return {
+      items: null,
+      selected: null,
       loadingStatus: true,
       newConfirmed: null,
       newDeaths: null,
@@ -83,7 +125,16 @@ export default {
       totalDeaths: null,
       totalRecovered: null,
       allCountries: null,
-      countryCode: "kh"
+      allCountriesSelected: null,
+      countryCode: "kh",
+      selectCountryObj: {
+        newConfirmed: null,
+        newDeaths: null,
+        newRecovered: null,
+        totalConfirmed: null,
+        totalDeaths: null,
+        totalRecovered: null
+      }
     };
   },
   methods: {
@@ -99,7 +150,7 @@ export default {
 
       const data = await axios.get("https://api.covid19api.com/summary");
       console.log(data.data);
-      
+
       this.newConfirmed = data.data.Global.NewConfirmed;
       this.newDeaths = data.data.Global.NewDeaths;
       this.newRecovered = data.data.Global.NewRecovered;
@@ -115,56 +166,54 @@ export default {
       //console.log(this.getCountryName("Cambodia"));
       try {
         const data = await axios.get("https://api.covid19api.com/summary");
-
+        let allCountriesName = [];
         let allCountries = data.data.Countries;
+        this.allCountriesSelected = allCountries;
+        console.log(allCountries, "All countries");
+        let selectCountry = allCountries.filter(country => {
+          return country.Country === this.selected;
+        });
+        console.log(selectCountry, "Select Country");
+
+        //getting all the countries name
+        allCountries.forEach(country => {
+          allCountriesName.push(country.Country);
+        });
+        console.log(allCountriesName);
+        //generate all auto select
+        this.items = allCountriesName;
         let top10Countries = allCountries
           .sort((a, b) => {
             return b.TotalConfirmed - a.TotalConfirmed;
           })
           .slice(0, 10);
+
+        //getting the top 10 countries
         this.allCountries = top10Countries;
-        console.log("All Countries", top10Countries);
+
         this.loadingStatus = false;
       } catch (err) {}
       //setTimeout(loadData, 1000);
-    },
-    injectCountry() {
-      const countrySelected = this.$refs.country;
-      this.allCountries.forEach(country => {
-        let countryCode = country.CountryCode;
-        //console.log(this.$refs.country);
-        countrySelected.innerHTML += `    
+    }
+  },
+  watch: {
+    selected: function() {
+      console.log("hi");
 
-        <div class="each-country">
-         <span style="width=20px;height=20px;" class="flag-icon flag-icon-${countryCode.toLowerCase()}"></span>
-        <h3>${country.Country}</h3>
-        <div class="figure">
-          <div>
-            <p>Confirm Cases</p>
-             <h4>${country.TotalConfirmed}</h4>
-          </div>
-          <div>
-            <p>Total Recovered</p>
-            <h4>${country.TotalRecovered}</h4>
-          </div>
-          <div>
-            <p>Active Case</p>
-            <h4>${country.TotalConfirmed - country.TotalRecovered}</h4>
-          </div>
-          <div>
-            <p>Confirm Death</p>
-             <h4>${country.TotalDeaths}</h4>
-          </div>
-        </div>
-          <a href="#/country/${country.Country}">
-
-        <button>Click me</button>
-          </a>
-
-      </div>
-      
-            `;
+      let selectCountry = this.allCountriesSelected.filter(country => {
+        return country.Country === this.selected;
       });
+      console.log(selectCountry);
+      this.selectCountryObj.newConfirmed = selectCountry[0].NewConfirmed;
+      this.selectCountryObj.newDeaths = selectCountry[0].NewDeaths;
+
+      this.selectCountryObj.newRecovered = selectCountry[0].NewRecovered;
+
+      this.selectCountryObj.totalConfirmed = selectCountry[0].TotalConfirmed;
+
+      this.selectCountryObj.totalDeaths = selectCountry[0].TotalDeaths;
+      this.selectCountryObj.totalRecovered = selectCountry[0].TotalRecovered;
+      console.log("select obj", this.selectCountryObj);
     }
   },
   created() {
@@ -216,13 +265,13 @@ export default {
 </style>
 <style scoped>
 .router-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: inherit;
-    display: block;
-    text-decoration: none;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
 .loader-container {
   display: flex;
   justify-content: center;

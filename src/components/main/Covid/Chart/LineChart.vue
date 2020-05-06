@@ -4,8 +4,13 @@ import axios from "axios"
 import moment from "moment"
 export default {
   extends: Line,
+  props:[
+      'country'
+  ],
    data() {
     return {
+      daysSpain:null,
+      numberOfDaysSpain:null,
         days:null,
         date:null,
       chartData: {
@@ -19,24 +24,33 @@ export default {
         async loadData() {
       //console.log(this.getCountryName("Cambodia"));
 
-      const data = await axios.get('https://api.covid19api.com/country/spain/status/confirmed');
-     console.log(data);
+      const dataCountry = await axios.get(`https://api.covid19api.com/total/country/${this.country.toLowerCase()}/status/confirmed`);
+      const dataSpain = await axios.get(`https://api.covid19api.com/total/country/United States of America/status/confirmed`);
+
+     console.log(dataCountry.data);
+     let dateSpain=[]
+     let numberOfDaysSpain=[]
      let date=[]
      let numberOfDays=[]
-      let allDaysData=data.data.forEach(day=>{
+      let allDaysData=dataCountry.data.forEach(day=>{
           console.log(day.Cases);
           date.push(moment(day.Date).format("MM/DD"));
           numberOfDays.push(day.Cases)
       })
-      this.days=numberOfDays;
-      this.date=date;
-      console.log(date);
+      dataSpain.data.forEach(day=>{
+          console.log(day.Cases);
+          dateSpain.push(moment(day.Date).format("MM/DD"));
+          numberOfDaysSpain.push(day.Cases)
+      })
+      this.daysSpain=numberOfDaysSpain;
+      console.log("Spain",this.daysSpain);
       
-     console.log(this.days);
+      this.numberOfDaysSpain=numberOfDaysSpain;
+      this.days=numberOfDays;
+      console.log("Other",this.days);
 
-      //console.log("All Countries");
-
-      //setTimeout(loadData, 1000);
+      this.date=date;
+    
     },
   },
   mounted() {
@@ -47,11 +61,18 @@ export default {
               labels: this.date,
               datasets: [
                 {
-                  label: "Number of Case Spain",
+                  label: `Number of Case ${this.country}`,
                   data: this.days,
                   backgroundColor: "transparent",
                   borderColor: "rgba(1, 116, 188, 0.50)",
                   pointBackgroundColor: "black"
+                },
+                 {
+                  label: `Number of Case US`,
+                  data: this.daysSpain,
+                  backgroundColor: "transparent",
+                  borderColor: "brown",
+                  pointBackgroundColor: "red"
                 }
               ]
             },
@@ -60,7 +81,7 @@ export default {
               maintainAspectRatio: false,
               title: {
                 display: true,
-                text: "My Data"
+                
               }
             }
           );

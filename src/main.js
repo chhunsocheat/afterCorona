@@ -6,8 +6,14 @@ import router from './router'
 import VueLazyload from 'vue-lazyload'
 import {store} from './store/store'
 import firebase from 'firebase'
+import { CoolSelectPlugin } from 'vue-cool-select'
+ 
+// paste the line below only if you need "bootstrap" theme
+
+// paste the line below only if you need "material-design" theme
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+Vue.use(CoolSelectPlugin);
 Vue.use(VueLazyload)
 // Install BootstrapVue
 Vue.use(BootstrapVue)

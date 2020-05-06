@@ -1,25 +1,31 @@
 <template>
   <div id="app">
-      <div style="margin-top:20vh;"></div>
-   <h1>Over View of Spain </h1>
-    <LineChart/>
+    <div style="margin-top:20vh;"></div>
+    <CoolSelect v-model="selected" :items="items" />
+    <h1>Over View of {{country}} vs US</h1>
+    <LineChart :country="country" />
   </div>
 </template>
 
 <script>
-
-import LineChart from "./LineChart"
-import axios from "axios"
+import LineChart from "./LineChart";
+import axios from "axios";
+import { CoolSelect } from "vue-cool-select";
 export default {
   name: "App",
   components: {
-    
     LineChart
+    ,CoolSelect 
   },
-  
+
   data() {
     return {
-        days:null,
+      // simple example of items
+      items: ["Item 1", "Item 2", "Item 3"],
+      // there will be a selected item
+      selected: null,
+      country: this.$route.params.countryName,
+      days: null,
       chartData: {
         Books: 24,
         Magazine: 30,
@@ -27,22 +33,25 @@ export default {
       }
     };
   },
-  methods:{
-        async loadData() {
+  methods: {
+    async loadData() {
       //console.log(this.getCountryName("Cambodia"));
 
-      const data = await axios.get('https://api.covid19api.com/country/spain/status/confirmed');
+      const data = await axios.get(
+        `https://api.covid19api.com/${this.country.toLowerCase()}/spain/status/confirmed`
+      );
       console.log(data.data);
-      
-      this.days=data.data
+
+      this.days = data.data;
 
       console.log("All Countries");
 
       //setTimeout(loadData, 1000);
-    },
+    }
   },
-  created(){
-      this.loadData();
+  created() {
+    this.loadData();
+    console.log(this.$route.params.countryName);
   }
 };
 </script>
