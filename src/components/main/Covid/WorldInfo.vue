@@ -23,39 +23,49 @@
       </h2>
     </div>
     <h1>Your Country</h1>
-    <CoolSelect v-model="selected" :items="items" />
-    <b>Selected:</b>
+    <cool-select
+    class="input"
+     v-model="selected" 
+     :items="items" 
+     placeholder="Search for your country"
+     />
+    <b>Country:</b>
     {{ selected || "not chosen" }}.
     <br />
     <br />
-    <router-link v-if="selected">
-      <div class="each-country">
+    <div v-if="selected">
+      <router-link
+          class="router-link"
+          :to="{name:'covidcountry',params:{countryName:selectCountryObj.countryName}}"
+        >
+      <div class="selected-country">
         <span
           style="width=20px;height=20px;"
-          :class="['flag-icon flag-icon-kh']"
+         :class="['flag-icon flag-icon-'+selectCountryObj.countryCode.toLowerCase()]"
         ></span>
 
-        <h3>{{selectCountryObj.newConfirmed}}</h3>
-        <!-- <div class="figure">
+        <h3>{{selectCountryObj.countryName}}</h3>
+        <div class="figure">
           <div>
             <p>Confirm Cases</p>
-            <h4>{{country.TotalConfirmed}}</h4>
+            <h4>{{selectCountryObj.totalConfirmed}}</h4>
           </div>
           <div>
             <p>Total Recovered</p>
-            <h4>{{country.TotalRecovered}}</h4>
+            <h4>{{selectCountryObj.totalRecovered}}</h4>
           </div>
           <div>
             <p>Active Case</p>
-            <h4>{{country.TotalConfirmed - country.TotalRecovered}}</h4>
+            <h4>{{selectCountryObj.totalConfirmed - selectCountryObj.totalRecovered}}</h4>
           </div>
           <div>
             <p>Confirm Death</p>
-            <h4>{{country.TotalDeaths}}</h4>
+            <h4>{{selectCountryObj.totalDeaths}}</h4>
           </div>
-        </div> -->
+        </div>
       </div>
-    </router-link>
+      </router-link>
+    </div>
     <h2 style="margin-bottom:20px;">Top 10 Countries:</h2>
 
     <div class="loader-container">
@@ -128,6 +138,8 @@ export default {
       allCountriesSelected: null,
       countryCode: "kh",
       selectCountryObj: {
+        countryCode:null,
+        countryName:null,
         newConfirmed: null,
         newDeaths: null,
         newRecovered: null,
@@ -206,6 +218,8 @@ export default {
       console.log(selectCountry);
       this.selectCountryObj.newConfirmed = selectCountry[0].NewConfirmed;
       this.selectCountryObj.newDeaths = selectCountry[0].NewDeaths;
+      this.selectCountryObj.countryName = selectCountry[0].Country;
+      this.selectCountryObj.countryCode = selectCountry[0].CountryCode;
 
       this.selectCountryObj.newRecovered = selectCountry[0].NewRecovered;
 
@@ -229,6 +243,25 @@ export default {
 </script>
 
 <style >
+.selected-country{
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: transparent solid 1px;
+  width: 40vw;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+   box-shadow: 5px 5px 10px #79797957;
+  
+  border-radius: 5px;
+}
+.selected-country:hover{
+  border: black solid 1px;
+
+}
 .figure div {
   margin: 0px 10px 0px 10px;
 }
@@ -264,6 +297,12 @@ export default {
 }
 </style>
 <style scoped>
+.input{
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .router-link {
   display: flex;
   flex-direction: column;
@@ -299,5 +338,10 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+@media only screen and (max-width: 800px) {
+.selected-country{
+  width: 100%;
+}
 }
 </style>

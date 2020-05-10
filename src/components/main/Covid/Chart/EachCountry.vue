@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div style="margin-top:20vh;"></div>
-    <CoolSelect v-model="selected" :items="items" />
+    <!-- <CoolSelect v-model="selected" :items="items" /> -->
     <h1>Over View of {{country}} vs US</h1>
     <LineChart :country="country" />
   </div>

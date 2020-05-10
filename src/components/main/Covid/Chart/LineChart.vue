@@ -25,7 +25,7 @@ export default {
       //console.log(this.getCountryName("Cambodia"));
 
       const dataCountry = await axios.get(`https://api.covid19api.com/total/country/${this.country.toLowerCase()}/status/confirmed`);
-      const dataSpain = await axios.get(`https://api.covid19api.com/total/country/United States of America/status/confirmed`);
+      const dataUS = await axios.get(`https://api.covid19api.com/total/country/United States of America/status/confirmed`);
 
      console.log(dataCountry.data);
      let dateSpain=[]
@@ -34,22 +34,26 @@ export default {
      let numberOfDays=[]
       let allDaysData=dataCountry.data.forEach(day=>{
           console.log(day.Cases);
-          date.push(moment(day.Date).format("MM/DD"));
           numberOfDays.push(day.Cases)
       })
-      dataSpain.data.forEach(day=>{
+      dataUS.data.forEach(day=>{
           console.log(day.Cases);
+          date.push(moment(day.Date).format("MM/DD"));
+
           dateSpain.push(moment(day.Date).format("MM/DD"));
           numberOfDaysSpain.push(day.Cases)
       })
-      this.daysSpain=numberOfDaysSpain;
+      this.daysSpain=numberOfDaysSpain
+      // .slice(Math.max(numberOfDaysSpain.length-60,0));
       console.log("Spain",this.daysSpain);
       
       this.numberOfDaysSpain=numberOfDaysSpain;
-      this.days=numberOfDays;
+      this.days=numberOfDays
+      // .slice(Math.max(numberOfDays.length-60,0));
       console.log("Other",this.days);
 
-      this.date=date;
+      this.date=date
+      // .slice(Math.max(numberOfDays.length-30,0));
     
     },
   },
@@ -63,14 +67,14 @@ export default {
                 {
                   label: `Number of Case ${this.country}`,
                   data: this.days,
-                  backgroundColor: "transparent",
+                  backgroundColor: "black",
                   borderColor: "rgba(1, 116, 188, 0.50)",
                   pointBackgroundColor: "black"
                 },
                  {
                   label: `Number of Case US`,
                   data: this.daysSpain,
-                  backgroundColor: "transparent",
+                  backgroundColor: "red",
                   borderColor: "brown",
                   pointBackgroundColor: "red"
                 }
