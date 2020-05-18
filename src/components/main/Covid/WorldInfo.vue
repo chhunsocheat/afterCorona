@@ -288,6 +288,87 @@ export default {
   border: black 1px solid;
   cursor: pointer;
 }
+
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
 .figure {
   display: flex;
   flex-direction: column;
