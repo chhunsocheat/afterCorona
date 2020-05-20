@@ -449,6 +449,186 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}.figure {
+  display: flex;
+  flex-direction: column;
+}
 
 .figure {
   display: flex;
